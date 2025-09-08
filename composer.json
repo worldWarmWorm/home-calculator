@@ -1,0 +1,41 @@
+{
+  "name": "world-warm-worm/home-calculator",
+  "description": "Determines the expenses for utilities by applying the current rates set by the utility providers.\n",
+  "type": "project",
+  "homepage": "https://github.com/worldWarmWorm/home-calculator",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "v.davydkin",
+      "email": "world-warm-worm@ya.ru"
+    }
+  ],
+  "require": {
+    "php": "8.3.*",
+    "ext-mbstring": "*",
+    "ext-curl": "*",
+    "ext-openssl": "*",
+    "ext-dom": "*",
+    "ext-json": "*",
+    "ext-libxml": "*",
+    "ext-tokenizer": "*",
+    "ext-xml": "*",
+    "ext-xmlwriter": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "10.5.*",
+    "phpstan/phpstan": "2.1.x-dev",
+    "phpstan/phpstan-strict-rules": "2.0.x-dev",
+    "friendsofphp/php-cs-fixer": "3.87.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "HomeCalculator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "HomeCalculator\\Tests\\": "tests/"
+    }
+  }
+}

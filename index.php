@@ -1,10 +1,16 @@
 <?php
 
 use HomeCalculator\App;
+use HomeCalculator\Provider\AOSAHProvider;
 
 require_once "vendor/autoload.php";
 
-$app = App::init();
+$app = App::init([
+    new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/')
+]);
+$providers = $app->getProviders();
+
+
 ?>
 
 <!doctype html>
@@ -18,5 +24,10 @@ $app = App::init();
 </head>
 <body>
     <h1><?= $app->getName() ?></h1>
+    <ul>
+        <?php foreach ($providers as $provider) { ?>
+            <li><?= $provider->getName() ?></li>
+        <?php } ?>
+    </ul>
 </body>
 </html>

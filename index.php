@@ -24,9 +24,16 @@ $providers = $app->getProviders();
 </head>
 <body>
     <h1><?= $app->getName() ?></h1>
+    <blockquote>Тарифы всех поставщиков услуг указаны за актуальный период для адреса г.Новосибирск, ул.Березовая, д.13</blockquote>
     <ul>
         <?php foreach ($providers as $provider) { ?>
-            <li><?= $provider->getName() ?></li>
+            <li>Организация: <?= $provider->getName() ?></li>
+            <li>Тариф: <?= $provider->getTax() ?> <?= $provider->getMeasure() ?></li>
+            <?php if (null !== $provider->getFixedTaxExplain()) { ?>
+                <li>Сумма платежа фиксированная: <?= $provider->getFixedTaxExplain() ?></li>
+            <?php } ?>
+            <li><a href="<?= $provider->getUrl() ?>" target="_blank">Перейти к странице тарифов</a></li>
+            <hr>
         <?php } ?>
     </ul>
 </body>

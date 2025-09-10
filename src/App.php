@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator;
 
-use HomeCalculator\Provider\ProviderInterface;
+use HomeCalculator\Provider\Driver\ProviderInterface;
 
 final class App
 {
@@ -33,6 +33,9 @@ final class App
         return $this->name;
     }
 
+    /**
+     * @return array<int, ProviderInterface>
+     */
     public function getProviders(): array
     {
         return $this->providers;

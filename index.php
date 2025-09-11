@@ -1,12 +1,13 @@
 <?php
 
 use HomeCalculator\App;
-use HomeCalculator\Provider\AOSAHProvider;
+use HomeCalculator\Provider\{AOSAHProvider, ModernizationFundProvider};
 
 require_once "vendor/autoload.php";
 
 $app = App::init([
-    new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/')
+    new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
+    new ModernizationFundProvider('')
 ]);
 $providers = $app->getProviders();
 
@@ -25,13 +26,17 @@ $providers = $app->getProviders();
 <body>
     <h1><?= $app->getName() ?></h1>
     <blockquote>Тарифы всех поставщиков услуг указаны за актуальный период для адреса г.Новосибирск, ул.Березовая, д.13</blockquote>
+    <h2>Организации</h2>
     <ul>
         <?php foreach ($providers as $provider) { ?>
-            <li>Организация: <?= $provider->getName() ?></li>
-            <li>Тариф: <?= $provider->getTax() ?> <?= $provider->getMeasure() ?></li>
-            <?php if (null !== $provider->getFixedTaxExplain()) { ?>
-                <li>Сумма платежа фиксированная: <?= $provider->getFixedTaxExplain() ?></li>
-            <?php } ?>
+            <li><h3><?= $provider->getOrganizationName() ?></h3></li>
+            <h4>Услуги</h4>
+            <ul>
+                <?php foreach ($provider->getServices() as $service) { ?>
+                    <li><?= $service->getName() ?></li>
+                    <li><?= $service->getTax() . ' ₽ ' . $service->getUnit() ?></li>
+                <?php } ?>
+            </ul>
             <li><a href="<?= $provider->getUrl() ?>" target="_blank">Перейти к странице тарифов</a></li>
             <hr>
         <?php } ?>

@@ -12,9 +12,8 @@ final class TestAOSAHProvider extends TestCase
     public function testParsedContent(): void
     {
         $provider = new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/');
-        $name = $provider->getName();
+        $name = $provider->getOrganizationName();
         $tax = $provider->getTax();
-        $measure = $provider->getMeasure();
 
         self::assertEquals('АО «САХ»', $name);
         self::assertEquals('91.52', $tax);

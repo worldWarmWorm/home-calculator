@@ -6,38 +6,30 @@ namespace HomeCalculator\Provider\Driver;
 
 abstract class Provider implements ProviderInterface
 {
-    protected string $name;
+    protected string $organizationName;
 
     protected string $url;
 
-    protected float $tax;
-
-    protected string $measure;
-
-    protected ?string $fixedTaxExplain = null;
+    /**
+     * @var array<int, Service>
+     */
+    protected array $services;
 
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    public function getName(): string
+    public function getOrganizationName(): string
     {
-        return $this->name;
+        return $this->organizationName;
     }
 
-    public function getTax(): float
+    /**
+     * @return array<int, Service>
+     */
+    public function getServices(): array
     {
-        return $this->tax;
-    }
-
-    public function getMeasure(): string
-    {
-        return $this->measure;
-    }
-
-    public function getFixedTaxExplain(): ?string
-    {
-        return $this->fixedTaxExplain;
+        return $this->services;
     }
 }

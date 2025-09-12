@@ -29,6 +29,7 @@ final class AOSAHProvider extends Provider
 
         $this->services = [
             new Service(
+                self::generateServiceKey('1'),
                 'Обращение с ТКО',
                 isset($tax[0]) ? (float)str_replace(',', '.', $tax[0]) : 0,
                 'с одного человека, прописанного в квартире'

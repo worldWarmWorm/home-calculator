@@ -26,10 +26,30 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @return array<int, Service>
+     * @return array<Service>
      */
     public function getServices(): array
     {
         return $this->services;
+    }
+
+    public function getServiceById(string $id): Service
+    {
+        $key = $this->generateServiceKey($id);
+        $service = array_filter(
+            $this->services,
+            fn(Service $service) => $service->getKey() === $key
+        )[0] ?? null;
+
+        if (null === $service) {
+            throw new ProviderException("Service with key $key not found");
+        }
+
+        return $service;
+    }
+
+    public function generateServiceKey(string $uniqId): string
+    {
+        return static::class . ':service:' . $uniqId;
     }
 }

@@ -1,7 +1,10 @@
 <?php
 
 use HomeCalculator\App;
-use HomeCalculator\Provider\{AOSAHProvider, ModernizationFundProvider};
+use HomeCalculator\Provider\{
+    AOSAHProvider,
+    Driver\Service,
+    ModernizationFundProvider};
 
 require_once "vendor/autoload.php";
 
@@ -9,9 +12,6 @@ $app = App::init([
     new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
     new ModernizationFundProvider('')
 ]);
-$providers = $app->getProviders();
-
-
 ?>
 
 <!doctype html>
@@ -28,11 +28,13 @@ $providers = $app->getProviders();
     <blockquote>Тарифы всех поставщиков услуг указаны за актуальный период для адреса г.Новосибирск, ул.Березовая, д.13</blockquote>
     <h2>Организации</h2>
     <ul>
-        <?php foreach ($providers as $provider) { ?>
+        <?php foreach ($app->getProviders() as $provider) { ?>
             <li><h3><?= $provider->getOrganizationName() ?></h3></li>
             <h4>Услуги</h4>
             <ul>
-                <?php foreach ($provider->getServices() as $service) { ?>
+                <?php
+                /** @var Service $service */
+                foreach ($provider->getServices() as $service) { ?>
                     <li><?= $service->getName() ?></li>
                     <li><?= $service->getTax() . ' ₽ ' . $service->getUnit() ?></li>
                 <?php } ?>

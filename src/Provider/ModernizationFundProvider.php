@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Provider\Driver\Provider;
-use HomeCalculator\Provider\Driver\Service;
 use simplehtmldom\HtmlWeb;
+use HomeCalculator\Provider\Driver\{
+    Provider,
+    Service
+};
 
 class ModernizationFundProvider extends Provider
 {

@@ -4,13 +4,20 @@ use HomeCalculator\App;
 use HomeCalculator\Provider\{
     AOSAHProvider,
     Driver\Service,
-    ModernizationFundProvider};
+    GenerationOfSiberiaProvider,
+    GorskiyProvider,
+    GorvodokanalProvider,
+    ModernizationFundProvider
+};
 
 require_once "vendor/autoload.php";
 
 $app = App::init([
     new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
-    new ModernizationFundProvider('https://www.fondgkh-nso.ru/')
+    new ModernizationFundProvider('https://www.fondgkh-nso.ru/'),
+    new GorvodokanalProvider(''),
+    new GorskiyProvider(''),
+    new GenerationOfSiberiaProvider('')
 ]);
 ?>
 

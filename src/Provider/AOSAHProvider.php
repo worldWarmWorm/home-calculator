@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Provider\Driver\{Provider, Service};
 use simplehtmldom\HtmlWeb;
+use HomeCalculator\Provider\Driver\{
+    Provider,
+    Service
+};
 
 final class AOSAHProvider extends Provider
 {

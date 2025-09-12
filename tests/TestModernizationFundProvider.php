@@ -11,7 +11,7 @@ class TestModernizationFundProvider extends TestCase
 {
     public function testParsedContent(): void
     {
-        $provider = new ModernizationFundProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/');
+        $provider = new ModernizationFundProvider('https://www.fondgkh-nso.ru/');
         self::assertEquals('АО «САХ»', $provider->getOrganizationName());
 
         $service1 = $provider->getServiceById('1');

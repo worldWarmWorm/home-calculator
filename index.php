@@ -10,7 +10,7 @@ require_once "vendor/autoload.php";
 
 $app = App::init([
     new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
-    new ModernizationFundProvider('')
+    new ModernizationFundProvider('https://www.fondgkh-nso.ru/')
 ]);
 ?>
 

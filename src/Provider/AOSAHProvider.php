@@ -22,7 +22,7 @@ final class AOSAHProvider extends Provider
     {
         $html = (new HtmlWeb())->load($url);
         $this->url = $url;
-        $this->organizationName = preg_replace('/Тарифы - /', '', $html->find('head title', 0)->plaintext);
+        $this->organizationName = 'АО "САХ"';
 
         preg_match(
             '/\d+,\d+/',

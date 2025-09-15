@@ -20,51 +20,22 @@ class ModernizationFundProvider extends Provider
     public function loadInfo(string $url): void
     {
         $html = (new HtmlWeb())->load($url);
-        $this->url = '';
-        $this->organizationName = '';
+        $this->url = $url;
+        $this->organizationName = 'Фонд модернизации ЖКХ';
+
+        preg_match(
+            '/\d+,\d+/',
+            $html->find('body div.body div.main div.container div.tariffs-page div.styled-block ul li strong', 8)->plaintext,
+            $tax
+        );
+
         $this->services = [
             new Service(
-                $this->generateServiceKey('1'),
-                'Водоотведение на содержание общего имущества',
-                0,
-                ''
-            ),
-            new Service(
-                $this->generateServiceKey('2'),
-                'ХВС на содержание общего имущества',
-                0,
-                ''
-            ),
-            new Service(
-                $this->generateServiceKey('3'),
-                'Текущее содержание',
-                0,
-                ''
-            ),
-            new Service(
-                $this->generateServiceKey('4'),
-                'ГВС на содержание общего имущества',
-                0,
-                ''
-            ),
-            new Service(
-                $this->generateServiceKey('5'),
-                'Электроэнергия на содержание общего имущества',
-                0,
-                ''
-            ),
-            new Service(
-                $this->generateServiceKey('6'),
-                'ХВС на ГВС СОИ',
-                0,
-                ''
-            ),
-            new Service(
-                $this->generateServiceKey('7'),
-                'Текущий ремонт',
-                0,
-                ''
-            ),
+                self::generateServiceKey('1'),
+                'Обращение с ТКО',
+                isset($tax[0]) ? (float)str_replace(',', '.', $tax[0]) : 0,
+                'с одного человека, прописанного в квартире'
+            )
         ];
     }
 }

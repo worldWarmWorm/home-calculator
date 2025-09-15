@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Provider\Driver\Service;
 use simplehtmldom\HtmlWeb;
+use HomeCalculator\Driver\{
+    Provider,
+    Service
+};
 
-final class GorskiyProvider extends Driver\Provider
+final class GorskiyProvider extends Provider
 {
     public function __construct(string $url)
     {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HomeCalculator\Provider\Driver;
+namespace HomeCalculator\Driver;
 
 abstract class Provider implements ProviderInterface
 {

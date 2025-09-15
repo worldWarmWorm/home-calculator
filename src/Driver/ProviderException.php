@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HomeCalculator\Provider\Driver;
+namespace HomeCalculator\Driver;
 
 final class ProviderException extends \RuntimeException
 {

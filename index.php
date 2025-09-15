@@ -1,14 +1,13 @@
 <?php
 
 use HomeCalculator\App;
+use HomeCalculator\Driver\Service;
 use HomeCalculator\Provider\{
     AOSAHProvider,
-    Driver\Service,
     GenerationOfSiberiaProvider,
     GorskiyProvider,
     GorvodokanalProvider,
-    ModernizationFundProvider
-};
+    ModernizationFundProvider};
 
 require_once "vendor/autoload.php";
 

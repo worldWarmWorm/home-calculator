@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Provider\Driver\Provider;
+use HomeCalculator\Driver\Provider;
 
 final class GenerationOfSiberiaProvider extends Provider
 {

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace HomeCalculator\Provider;
 
 use simplehtmldom\HtmlWeb;
-use HomeCalculator\Provider\Driver\{
-    Provider,
-    Service
+use HomeCalculator\Driver\{
+    Service,
+    Provider
 };
 
 final class AOSAHProvider extends Provider

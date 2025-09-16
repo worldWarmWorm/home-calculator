@@ -6,6 +6,8 @@ namespace HomeCalculator\Storage;
 
 final class Storage
 {
+    private const string PATH = __DIR__ . '/../db.json';
+
     private static Storage $instance;
 
     private function __construct(private readonly string $storagePath)
@@ -14,23 +16,21 @@ final class Storage
 
     public static function getInstance(): self
     {
-
-        return self::$instance ??= new self('db.json');
+        return self::$instance ??= new self(self::PATH);
     }
 
-    public function read(string $organizationName, string $key): string
+    public function read(string $organizationName, string $serviceKey): string|float|null
     {
         $storage = $this->asArray();
 
-        if (!isset($storage[$organizationName])) {
-            throw new StorageException("Organization name \"$organizationName\" does not exist");
+        if (
+            [] === $storage
+            || !isset($storage[$organizationName], $storage[$organizationName][$serviceKey])
+        ) {
+            return null;
         }
 
-        if (!isset($storage[$organizationName][$key])) {
-            throw new StorageException("Key \"$key\" in organization \"$organizationName\" does not exist");
-        }
-
-        return $storage[$organizationName][$key];
+        return $storage[$organizationName][$serviceKey];
     }
 
     /**
@@ -40,16 +40,20 @@ final class Storage
     {
         $storage = $this->asArray();
 
-        foreach ($data as $key => $value) {
-            $storage[$organizationName][$key] = $value;
+        foreach ($data as $serviceKey => $value) {
+            $storage[$organizationName][$serviceKey] = $value;
         }
 
-        file_put_contents($this->storagePath, json_encode($storage));
+        file_put_contents($this->storagePath, json_encode($storage, JSON_PRETTY_PRINT));
     }
 
     private function asArray(): array
     {
         $storage = file_get_contents($this->storagePath);
+
+        if (false === $storage) {
+            return [];
+        }
 
         return json_decode($storage, true);
     }

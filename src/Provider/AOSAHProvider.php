@@ -24,7 +24,7 @@ final class AOSAHProvider extends Provider
             'organizationName' => $this->organizationName,
             'url' => $this->url,
             'services' => [
-                self::generateServiceKey('1') => new Service(
+                new Service(
                     'Обращение с ТКО',
                     $this->loadTax(self::generateServiceKey('1')),
                     'с одного человека, прописанного в квартире'
@@ -36,10 +36,9 @@ final class AOSAHProvider extends Provider
     private function loadTax(string $serviceKey): ?float
     {
         $storage = Storage::getInstance();
-        $services = $storage->read($this->organizationName, $serviceKey);
-        $service = $services[$serviceKey] ?? null;
+        $tax = $storage->read($this->organizationName, $serviceKey);
 
-        if (null === $service) {
+        if (null === $tax) {
             $parser = Parser::getInstance();
             $html = $parser->load($this->url);
 
@@ -55,6 +54,6 @@ final class AOSAHProvider extends Provider
             return $tax;
         }
 
-        return $service->getTax();
+        return $tax;
     }
 }

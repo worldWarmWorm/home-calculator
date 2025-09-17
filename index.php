@@ -2,21 +2,12 @@
 
 use HomeCalculator\App;
 use HomeCalculator\Driver\Service;
-use HomeCalculator\Provider\{
-    AOSAHProvider,
-    GenerationOfSiberiaProvider,
-    GorskiyProvider,
-    GorvodokanalProvider,
-    ModernizationFundProvider};
+use HomeCalculator\Provider\AOSAHProvider;
 
 require_once "vendor/autoload.php";
 
 $app = App::init([
     new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
-    new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
-    new GorvodokanalProvider('https://www.gorvodokanal.com/abonents/tariffs/'),
-    new GorskiyProvider('https://uk-gorsky.ru/21'), // Page not actual
-    new GenerationOfSiberiaProvider('https://gensib54.ru/')
 ]);
 ?>
 

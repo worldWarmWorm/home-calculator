@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
+use DateInvalidTimeZoneException;
+use DateMalformedStringException;
+use DateTimeImmutable;
 use HomeCalculator\Driver\Parser;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
@@ -11,8 +14,31 @@ use HomeCalculator\Storage\Storage;
 
 final class AOSAHProvider extends Provider
 {
+    /**
+     * @throws DateMalformedStringException
+     * @throws DateInvalidTimeZoneException
+     */
     public function __construct(string $url)
     {
+        $serviceKeys = [$this->generateServiceKey('1')];
+        $parser = Parser::getInstance();
+
+        foreach ($serviceKeys as $serviceKey) {
+            if ($this->isTimeToUpdateTax()) {
+                $html = $parser->load($this->url);
+
+                preg_match(
+                    '/\d+,\d+/',
+                    $html->find('body div.body div.main div.container div.tariffs-page div.styled-block ul li strong', 8)->plaintext,
+                    $matches
+                );
+
+                $tax = isset($matches[0]) ? (float)str_replace(',', '.', $matches[0]) : 0;
+                $storage = Storage::getInstance();
+                $storage->write($this->organizationName, [$serviceKey => $tax]);
+            }
+        }
+
         $this->organizationName = 'АО "САХ"';
         $this->url = $url;
     }
@@ -35,25 +61,6 @@ final class AOSAHProvider extends Provider
 
     private function loadTax(string $serviceKey): ?float
     {
-        $storage = Storage::getInstance();
-        $tax = $storage->read($this->organizationName, $serviceKey);
-
-        if (null === $tax) {
-            $parser = Parser::getInstance();
-            $html = $parser->load($this->url);
-
-            preg_match(
-                '/\d+,\d+/',
-                $html->find('body div.body div.main div.container div.tariffs-page div.styled-block ul li strong', 8)->plaintext,
-                $matches
-            );
-
-            $tax = isset($matches[0]) ? (float)str_replace(',', '.', $matches[0]) : 0;
-            $storage->write($this->organizationName, [$serviceKey => $tax]);
-
-            return $tax;
-        }
-
-        return $tax;
+        return Storage::getInstance()->read($this->organizationName, $serviceKey);
     }
 }

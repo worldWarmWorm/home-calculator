@@ -6,7 +6,7 @@ namespace HomeCalculator\Storage;
 
 final class Storage
 {
-    private const string PATH = __DIR__ . '/../db.json';
+    private const string PATH = __DIR__ . '/../../db.json';
 
     private static Storage $instance;
 

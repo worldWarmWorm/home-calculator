@@ -30,7 +30,6 @@ $app = App::init([
             <h4>Услуги</h4>
             <ul>
                 <?php
-                /** @var Service $service */
                 foreach ($provider->getServices() as $service) { ?>
                     <li><?= $service->getName() ?></li>
                     <li><?= $service->getTax() . ' ₽ ' . $service->getUnit() ?></li>

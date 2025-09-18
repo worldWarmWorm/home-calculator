@@ -24,13 +24,6 @@ final class AOSAHProvider extends Provider
         $this->url = $url;
         $this->storage = Storage::getInstance();
         $this->actualizeServicesTaxes();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function loadCard(): array
-    {
         $this->services = [
             new Service(
                 self::generateServiceKey('1'),
@@ -38,12 +31,6 @@ final class AOSAHProvider extends Provider
                 $this->storage->read($this->organizationName, self::generateServiceKey('1')),
                 'с одного человека, прописанного в квартире'
             )
-        ];
-
-        return [
-            'organizationName' => $this->organizationName,
-            'url' => $this->url,
-            'services' => $this->services
         ];
     }
 

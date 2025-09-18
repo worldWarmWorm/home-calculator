@@ -8,6 +8,7 @@ use DateInvalidTimeZoneException;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use DateTimeZone;
+use HomeCalculator\Storage\Storage;
 
 abstract class Provider implements ProviderInterface
 {
@@ -19,6 +20,8 @@ abstract class Provider implements ProviderInterface
      * @var array<int, Service>
      */
     protected array $services;
+
+    protected Storage $storage;
 
     public function getUrl(): string
     {
@@ -43,11 +46,25 @@ abstract class Provider implements ProviderInterface
         return static::class . ':service:' . $uniqId;
     }
 
+    public function getServiceByKey(string $key): Service
+    {
+        $service = array_filter(
+            $this->services,
+            fn(Service $service) => $service->getKey() === $key
+        )[0] ?? null;
+
+        if (null === $service) {
+            throw new ProviderException("Service with key $key not found");
+        }
+
+        return $service;
+    }
+
     /**
      * @throws DateMalformedStringException
      * @throws DateInvalidTimeZoneException
      */
-    protected function isTimeToUpdateTax(string $timezone = 'Asia/Novosibirsk'): bool
+    protected function isTimeToUpdateServicesTaxes(string $timezone = 'Asia/Novosibirsk'): bool
     {
         $tz = new DateTimeZone($timezone);
         $now = new DateTimeImmutable(timezone: $tz);

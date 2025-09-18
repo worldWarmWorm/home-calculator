@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 final class TestAOSAHProvider extends TestCase
 {
-    public function testParsedContent(): void
+    public function testProviderData(): AOSAHProvider
     {
         $provider = new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/');
         $card = $provider->loadCard();
@@ -20,5 +20,19 @@ final class TestAOSAHProvider extends TestCase
         self::assertEquals('Обращение с ТКО', $service1->getName());
         self::assertEquals('91.52', $service1->getTax());
         self::assertEquals('с одного человека, прописанного в квартире', $service1->getUnit());
+
+        return $provider;
+    }
+
+    /**
+     * @depends testProviderData
+     */
+    public function testServicesTaxesIsActual(AOSAHProvider $provider): void
+    {
+        $taxes = $provider->parseTaxesByServiceKeys([$provider->generateServiceKey('1')]);
+
+        foreach ($taxes as $serviceKey => $tax) {
+            self::assertEquals($provider->getServiceByKey($serviceKey)->getTax(), $tax);
+        }
     }
 }

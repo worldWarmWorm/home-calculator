@@ -4,3 +4,4 @@ composer.lock
 .phpunit.result.cache
 doc.txt
 db.json
+last_parse_date.txt

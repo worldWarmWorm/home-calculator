@@ -6,9 +6,9 @@ namespace HomeCalculator\Provider;
 
 use DateInvalidTimeZoneException;
 use DateMalformedStringException;
-use DateTimeImmutable;
 use HomeCalculator\Driver\Parser;
 use HomeCalculator\Driver\Provider;
+use HomeCalculator\Driver\ProviderException;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Storage\Storage;
 
@@ -20,47 +20,75 @@ final class AOSAHProvider extends Provider
      */
     public function __construct(string $url)
     {
-        $serviceKeys = [$this->generateServiceKey('1')];
-        $parser = Parser::getInstance();
-
-        foreach ($serviceKeys as $serviceKey) {
-            if ($this->isTimeToUpdateTax()) {
-                $html = $parser->load($this->url);
-
-                preg_match(
-                    '/\d+,\d+/',
-                    $html->find('body div.body div.main div.container div.tariffs-page div.styled-block ul li strong', 8)->plaintext,
-                    $matches
-                );
-
-                $tax = isset($matches[0]) ? (float)str_replace(',', '.', $matches[0]) : 0;
-                $storage = Storage::getInstance();
-                $storage->write($this->organizationName, [$serviceKey => $tax]);
-            }
-        }
-
         $this->organizationName = 'АО "САХ"';
         $this->url = $url;
+        $this->storage = Storage::getInstance();
+        $this->actualizeServicesTaxes();
     }
 
-    #[\Override]
+    /**
+     * @inheritDoc
+     */
     public function loadCard(): array
     {
+        $this->services = [
+            new Service(
+                self::generateServiceKey('1'),
+                'Обращение с ТКО',
+                $this->storage->read($this->organizationName, self::generateServiceKey('1')),
+                'с одного человека, прописанного в квартире'
+            )
+        ];
+
         return [
             'organizationName' => $this->organizationName,
             'url' => $this->url,
-            'services' => [
-                new Service(
-                    'Обращение с ТКО',
-                    $this->loadTax(self::generateServiceKey('1')),
-                    'с одного человека, прописанного в квартире'
-                )
-            ]
+            'services' => $this->services
         ];
     }
 
-    private function loadTax(string $serviceKey): ?float
+    /**
+     * @inheritDoc
+     */
+    public function actualizeServicesTaxes(): void
     {
-        return Storage::getInstance()->read($this->organizationName, $serviceKey);
+        if (false === $this->isTimeToUpdateServicesTaxes()) {
+            return;
+        }
+
+        $taxes = $this->parseTaxesByServiceKeys([$this->generateServiceKey('1')]);
+
+        foreach ($taxes as $serviceKey => $tax) {
+            $this->storage->write($this->organizationName, [$serviceKey => $tax]);
+        }
+    }
+
+    public function parseTaxesByServiceKeys(array $serviceKeys): array
+    {
+        $parser = Parser::getInstance();
+        $html = $parser->load($this->url);
+        $callbacks = [];
+
+        foreach ($serviceKeys as $serviceKey) {
+            $callbacks[$serviceKey] = match ($serviceKey) {
+                $this->generateServiceKey('1') => static function () use ($html): float {
+                    preg_match(
+                        '/\d+,\d+/',
+                        $html->find('body div.body div.main div.container div.tariffs-page div.styled-block ul li strong', 8)->plaintext,
+                        $matches
+                    );
+                    return isset($matches[0]) ? (float)str_replace(',', '.', $matches[0]) : 0;
+                },
+                default => throw new ProviderException("Service key \"$serviceKey\" not found"),
+            };
+        }
+
+        $taxes = [];
+
+        foreach ($serviceKeys as $serviceKey) {
+            $taxes[$serviceKey] = $callbacks[$serviceKey]();
+        }
+
+        return $taxes;
     }
 }

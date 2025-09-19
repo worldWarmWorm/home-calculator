@@ -64,7 +64,7 @@ abstract class Provider implements ProviderInterface
      * @throws DateMalformedStringException
      * @throws DateInvalidTimeZoneException
      */
-    protected function isTimeToUpdateServicesTaxes(string $timezone = 'Asia/Novosibirsk'): bool
+    protected function isTimeToUpdateServicesTaxes(string $timezone): bool
     {
         $tz = new DateTimeZone($timezone);
         $now = new DateTimeImmutable(timezone: $tz);

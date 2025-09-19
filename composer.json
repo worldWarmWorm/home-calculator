@@ -23,7 +23,8 @@
     "ext-tokenizer": "*",
     "ext-xml": "*",
     "ext-xmlwriter": "*",
-    "simplehtmldom/simplehtmldom": "^2.0@RC"
+    "simplehtmldom/simplehtmldom": "^2.0@RC",
+    "monolog/monolog": "^3.9"
   },
   "require-dev": {
     "phpunit/phpunit": "10.5.*",

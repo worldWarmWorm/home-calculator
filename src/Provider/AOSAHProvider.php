@@ -10,7 +10,10 @@ use HomeCalculator\Driver\Parser;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\ProviderException;
 use HomeCalculator\Driver\Service;
+use HomeCalculator\Driver\TimezoneEnum;
+use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
+use Monolog\Level;
 
 final class AOSAHProvider extends Provider
 {
@@ -32,6 +35,7 @@ final class AOSAHProvider extends Provider
                 'с одного человека, прописанного в квартире'
             )
         ];
+        Log::create(self::class . ' constructor called', Level::Info);
     }
 
     /**
@@ -39,7 +43,7 @@ final class AOSAHProvider extends Provider
      */
     public function actualizeServicesTaxes(): void
     {
-        if (false === $this->isTimeToUpdateServicesTaxes()) {
+        if (false === $this->isTimeToUpdateServicesTaxes(TimezoneEnum::NOVOSIBIRSK->value)) {
             return;
         }
 

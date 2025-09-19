@@ -5,3 +5,4 @@ composer.lock
 doc.txt
 db.json
 last_parse_date.txt
+app.log

@@ -29,8 +29,7 @@ $app = App::init([
             <li><h3><?= $provider->getOrganizationName() ?></h3></li>
             <h4>Услуги</h4>
             <ul>
-                <?php
-                foreach ($provider->getServices() as $service) { ?>
+                <?php foreach ($provider->getServices() as $service) { ?>
                     <li><?= $service->getName() ?></li>
                     <li><?= $service->getTax() . ' ₽ ' . $service->getUnit() ?></li>
                 <?php } ?>

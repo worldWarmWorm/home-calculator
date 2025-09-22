@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Tests;
 
-use HomeCalculator\Driver\Service;
 use HomeCalculator\Provider\AOSAHProvider;
 use PHPUnit\Framework\TestCase;
 

@@ -78,6 +78,7 @@ final class AOSAHProvider extends Provider
 
         foreach ($serviceKeys as $serviceKey) {
             $taxes[$serviceKey] = $callbacks[$serviceKey]();
+            Log::create("Parsed tax $taxes[$serviceKey] by key $serviceKey", Level::Info);
         }
 
         return $taxes;

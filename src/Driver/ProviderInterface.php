@@ -11,5 +11,5 @@ interface ProviderInterface
      * @throws DateMalformedStringException
      * @throws DateInvalidTimeZoneException
      */
-    public function actualizeServicesTaxes(): void;
+    public function actualizeServicesTaxes(ProviderInterface $provider): void;
 }

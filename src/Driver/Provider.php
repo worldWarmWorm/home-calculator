@@ -85,4 +85,19 @@ abstract class Provider implements ProviderInterface
             return true;
         }
     }
+
+    protected function isTaxesExists(ProviderInterface $provider): bool
+    {
+        $storage = Storage::getInstance();
+
+        foreach ($provider->getServices() as $service) {
+            $tax = $storage->read($provider->getOrganizationName(), $service->getKey());
+
+            if (null === $tax) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -16,24 +16,23 @@ use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
 use Monolog\Level;
 
-final class AOSAHProvider extends Provider
+final class ModernizationFundProvider extends Provider
 {
     /**
-     * @throws DateMalformedStringException
-     * @throws DateInvalidTimeZoneException
+     * @throws DateInvalidTimeZoneException | DateMalformedStringException
      */
     public function __construct(string $url)
     {
-        $this->organizationName = 'АО "САХ"';
+        $this->organizationName = 'Фонд модернизации ЖКХ';
         $this->url = $url;
         $this->storage = Storage::getInstance();
         $this->actualizeServicesTaxes($this);
         $this->services = [
             new Service(
                 self::generateServiceKey('1'),
-                'Обращение с ТКО',
+                'Взнос за капитальный ремонт',
                 $this->storage->read($this->organizationName, self::generateServiceKey('1')),
-                'с одного человека, прописанного в квартире'
+                'за 1 кв.м площади квартиры'
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);
@@ -44,14 +43,13 @@ final class AOSAHProvider extends Provider
      */
     public function actualizeServicesTaxes(ProviderInterface $provider): void
     {
-        if (
-            false === $this->isTaxesExists($provider)
-            || false === $this->isTimeToUpdateServicesTaxes(TimezoneEnum::NOVOSIBIRSK->value)
-        ) {
+        if (false === $this->isTimeToUpdateServicesTaxes(TimezoneEnum::NOVOSIBIRSK->value)) {
             return;
         }
 
-        $taxes = $this->parseTaxesByServiceKeys([$this->generateServiceKey('1')]);
+        $taxes = $this->parseTaxesByServiceKeys([
+            $this->generateServiceKey('1'),
+        ]);
 
         foreach ($taxes as $serviceKey => $tax) {
             $this->storage->write($this->organizationName, [$serviceKey => $tax]);
@@ -65,14 +63,10 @@ final class AOSAHProvider extends Provider
 
         foreach ($serviceKeys as $serviceKey) {
             $callbacks[$serviceKey] = match ($serviceKey) {
-                $this->generateServiceKey('1') => fn(): float => $parser->parseTax(
-                    $this->url,
-                    'body > div.body > div.main > div:nth-child(2) > div.tariffs-page > div:nth-child(1) > ul > li:nth-child(6) > strong:nth-child(2)'
-                ),
+                $this->generateServiceKey('1') => fn(): float => $parser->parseTax($this->url, 'body > div.wrap.container-fluid > div > main > section > div.col-lg-8 > div.row > div.col-xs-9 > ul:nth-child(3) > li:nth-child(3)'),
                 default => throw new ProviderException("Service key \"$serviceKey\" not found"),
             };
         }
-
         $taxes = [];
 
         foreach ($serviceKeys as $serviceKey) {

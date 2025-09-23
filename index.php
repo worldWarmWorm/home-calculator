@@ -1,13 +1,14 @@
 <?php
 
 use HomeCalculator\App;
-use HomeCalculator\Driver\Service;
 use HomeCalculator\Provider\AOSAHProvider;
+use HomeCalculator\Provider\ModernizationFundProvider;
 
 require_once "vendor/autoload.php";
 
 $app = App::init([
     new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
+    new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
 ]);
 ?>
 

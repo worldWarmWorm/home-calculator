@@ -9,7 +9,7 @@ final readonly class Service
     public function __construct(
         private string $key,
         private string $name,
-        private float  $tax,
+        private ?float  $tax,
         private string $unit
     ) {
     }
@@ -18,7 +18,7 @@ final readonly class Service
         return $this->key;
     }
 
-    public function getTax(): float
+    public function getTax(): ?float
     {
         return $this->tax;
     }

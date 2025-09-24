@@ -9,7 +9,6 @@ use DateMalformedStringException;
 use HomeCalculator\Driver\Parser;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\ProviderException;
-use HomeCalculator\Driver\ProviderInterface;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Driver\TimezoneEnum;
 use HomeCalculator\Logger\Log;
@@ -27,47 +26,30 @@ final class AOSAHProvider extends Provider
         $this->organizationName = 'АО "САХ"';
         $this->url = $url;
         $this->storage = Storage::getInstance();
-        $this->actualizeServicesTaxes($this);
+        $this->actualizeServicesTaxes();
+        $keys = $this->getRegisteredServicesKeys();
         $this->services = [
             new Service(
-                self::generateServiceKey('1'),
+                $keys[0],
                 'Обращение с ТКО',
-                $this->storage->read($this->organizationName, self::generateServiceKey('1')),
+                $this->storage->read($this->organizationName, $keys[0]),
                 'с одного человека, прописанного в квартире'
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function actualizeServicesTaxes(ProviderInterface $provider): void
-    {
-        if (
-            false === $this->isTaxesExists($provider)
-            || false === $this->isTimeToUpdateServicesTaxes(TimezoneEnum::NOVOSIBIRSK->value)
-        ) {
-            return;
-        }
-
-        $taxes = $this->parseTaxesByServiceKeys([$this->generateServiceKey('1')]);
-
-        foreach ($taxes as $serviceKey => $tax) {
-            $this->storage->write($this->organizationName, [$serviceKey => $tax]);
-        }
-    }
-
-    public function parseTaxesByServiceKeys(array $serviceKeys): array
+    public function parseServicesTaxes(): array
     {
         $parser = new Parser();
+        $serviceKeys = $this->getRegisteredServicesKeys();
         $callbacks = [];
 
         foreach ($serviceKeys as $serviceKey) {
             $callbacks[$serviceKey] = match ($serviceKey) {
-                $this->generateServiceKey('1') => fn(): float => $parser->parseTax(
+                $serviceKeys[0] => fn(): ?float => $parser->parseTax(
                     $this->url,
-                    'body > div.body > div.main > div:nth-child(2) > div.tariffs-page > div:nth-child(1) > ul > li:nth-child(6) > strong:nth-child(2)'
+                    ''
                 ),
                 default => throw new ProviderException("Service key \"$serviceKey\" not found"),
             };
@@ -81,5 +63,12 @@ final class AOSAHProvider extends Provider
         }
 
         return $taxes;
+    }
+
+    public function getRegisteredServicesKeys(): array
+    {
+        return [
+            $this->generateServiceKey('1'),
+        ];
     }
 }

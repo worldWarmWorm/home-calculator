@@ -26,7 +26,7 @@ class ModernizationFundProviderTest extends TestCase
      */
     public function testIsActualServicesTaxes(ModernizationFundProvider $provider): void
     {
-        $taxes = $provider->parseTaxesByServiceKeys([$provider->generateServiceKey('1')]);
+        $taxes = $provider->parseServicesTaxes();
 
         foreach ($taxes as $serviceKey => $tax) {
             self::assertEquals($provider->getServiceByKey($serviceKey)->getTax(), $tax);

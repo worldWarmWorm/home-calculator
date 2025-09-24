@@ -26,7 +26,7 @@ final class TestAOSAHProvider extends TestCase
      */
     public function testIsActualServicesTaxes(AOSAHProvider $provider): void
     {
-        $taxes = $provider->parseTaxesByServiceKeys([$provider->generateServiceKey('1')]);
+        $taxes = $provider->parseServicesTaxes();
 
         foreach ($taxes as $serviceKey => $tax) {
             self::assertEquals($provider->getServiceByKey($serviceKey)->getTax(), $tax);

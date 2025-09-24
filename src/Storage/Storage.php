@@ -8,7 +8,7 @@ final class Storage
 {
     private const string PATH = __DIR__ . '/../../db.json';
 
-    private static Storage $instance;
+    private static ?Storage $instance = null;
 
     private function __construct(private readonly string $storagePath)
     {

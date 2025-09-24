@@ -8,7 +8,9 @@ use DateInvalidTimeZoneException;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use DateTimeZone;
+use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
+use Monolog\Level;
 
 abstract class Provider implements ProviderInterface
 {
@@ -86,18 +88,37 @@ abstract class Provider implements ProviderInterface
         }
     }
 
-    protected function isTaxesExists(ProviderInterface $provider): bool
+    protected function isTaxesExists(string $organizationName, array $serviceKeys): bool
     {
         $storage = Storage::getInstance();
 
-        foreach ($provider->getServices() as $service) {
-            $tax = $storage->read($provider->getOrganizationName(), $service->getKey());
+        foreach ($serviceKeys as $serviceKey) {
+            $tax = $storage->read($organizationName, $serviceKey);
 
             if (null === $tax) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
+    }
+
+    public function actualizeServicesTaxes(): void
+    {
+        if (
+            false === $this->isTaxesExists($this->organizationName, $this->getRegisteredServicesKeys())
+            || true === $this->isTimeToUpdateServicesTaxes(TimezoneEnum::NOVOSIBIRSK->value)
+        ) {
+            foreach ($this->parseServicesTaxes() as $serviceKey => $tax) {
+                if (null === $tax) {
+                    Log::create("Can't parse tax by serviceKey $serviceKey. Look provider's page: $this->url", Level::Error);
+                    // @TODO add notification via sms or telergam
+
+                    continue;
+                }
+
+                $this->storage->write($this->organizationName, [$serviceKey => $tax]);
+            }
+        }
     }
 }

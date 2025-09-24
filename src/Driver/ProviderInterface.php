@@ -2,14 +2,15 @@
 
 namespace HomeCalculator\Driver;
 
-use DateInvalidTimeZoneException;
-use DateMalformedStringException;
-
 interface ProviderInterface
 {
     /**
-     * @throws DateMalformedStringException
-     * @throws DateInvalidTimeZoneException
+     * @return array<int, string>
      */
-    public function actualizeServicesTaxes(ProviderInterface $provider): void;
+    public function getRegisteredServicesKeys(): array;
+
+    /**
+     * @return array<int, float>
+     */
+    public function parseServicesTaxes(): array;
 }

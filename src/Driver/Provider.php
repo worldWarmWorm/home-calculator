@@ -8,6 +8,7 @@ use DateInvalidTimeZoneException;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use DateTimeZone;
+use HomeCalculator\Delivery\Alert;
 use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
 use Monolog\Level;
@@ -111,8 +112,9 @@ abstract class Provider implements ProviderInterface
         ) {
             foreach ($this->parseServicesTaxes() as $serviceKey => $tax) {
                 if (null === $tax) {
-                    Log::create("Can't parse tax by serviceKey $serviceKey. Look provider's page: $this->url", Level::Error);
-                    // @TODO add notification via sms or telergam
+                    $message = "Can't parse tax by serviceKey $serviceKey. Look provider's page: $this->url";
+                    Log::create($message, Level::Error);
+                    (new Alert($message))->send();
 
                     continue;
                 }

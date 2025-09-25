@@ -24,7 +24,8 @@
     "ext-xml": "*",
     "ext-xmlwriter": "*",
     "monolog/monolog": "^3.9",
-    "fabpot/goutte": "^4.0"
+    "fabpot/goutte": "^4.0",
+    "vlucas/phpdotenv": "^5.6"
   },
   "require-dev": {
     "phpunit/phpunit": "10.5.*",

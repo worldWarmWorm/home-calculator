@@ -18,7 +18,7 @@ final class AOSAHProvider extends Provider
         $this->url = $url;
         $this->storage = Storage::getInstance();
         $this->actualizeServicesTaxes();
-        $keys = $this->getKeySelectorPairs();
+        $keys = array_keys($this->getKeySelectorPairs());
         $this->services = [
             new Service(
                 $keys[0],

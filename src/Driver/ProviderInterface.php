@@ -5,12 +5,7 @@ namespace HomeCalculator\Driver;
 interface ProviderInterface
 {
     /**
-     * @return array<int, string>
+     * @return array<string, string>
      */
-    public function getRegisteredServicesKeys(): array;
-
-    /**
-     * @return array<int, float>
-     */
-    public function parseServicesTaxes(): array;
+    public function getKeySelectorPairs(): array;
 }

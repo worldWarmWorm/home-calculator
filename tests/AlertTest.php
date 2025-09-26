@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Tests;
 
-use HomeCalculator\Delivery\Alert;
+use HomeCalculator\Delivery\Telegram\Alert;
 use PHPUnit\Framework\TestCase;
 
 final class AlertTest extends TestCase

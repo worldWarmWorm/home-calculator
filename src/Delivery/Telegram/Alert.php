@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace HomeCalculator\Delivery;
+namespace HomeCalculator\Delivery\Telegram;
 
-use Dotenv\Dotenv;
+use HomeCalculator\Delivery\Delivery;
 
-final class Alert
+final class Alert extends Delivery
 {
-    private const string PATH = __DIR__ . '/../../';
+    private string $url;
 
     private string $token;
 
@@ -16,9 +16,9 @@ final class Alert
 
     public function __construct(string $message)
     {
-        $dotenv = Dotenv::createImmutable(self::PATH);
-        $dotenv->load();
+        parent::__construct();
 
+        $this->url = $_ENV['TG_API_URL'];
         $this->token = $_ENV['TG_BOT_TOKEN'];
         $this->query = http_build_query([
             'chat_id' => $_ENV['TG_CHAT_ID'],
@@ -29,7 +29,7 @@ final class Alert
     public function send(): string
     {
         try {
-            $ch = curl_init("https://api.telegram.org/bot$this->token/sendMessage?$this->query");
+            $ch = curl_init("$this->url/bot$this->token/sendMessage?$this->query");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HEADER, false);
             $return = curl_exec($ch);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Delivery;
 
-final class AlertException extends \RuntimeException
+interface DeliveryInterface
 {
-
+    public function send(): string;
 }

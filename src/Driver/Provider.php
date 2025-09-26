@@ -8,7 +8,7 @@ use DateInvalidTimeZoneException;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use DateTimeZone;
-use HomeCalculator\Delivery\Alert;
+use HomeCalculator\Delivery\Telegram\Alert;
 use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
 use Monolog\Level;

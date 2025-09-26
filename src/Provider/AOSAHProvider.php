@@ -10,7 +10,6 @@ use HomeCalculator\Driver\Parser;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\ProviderException;
 use HomeCalculator\Driver\Service;
-use HomeCalculator\Driver\TimezoneEnum;
 use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
 use Monolog\Level;

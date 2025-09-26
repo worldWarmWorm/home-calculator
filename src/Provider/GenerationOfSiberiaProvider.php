@@ -18,7 +18,7 @@ class GenerationOfSiberiaProvider extends Provider
         $this->url = $url;
         $this->storage = Storage::getInstance();
         $this->actualizeServicesTaxes();
-        $keys = $this->getKeySelectorPairs();
+        $keys = array_keys($this->getKeySelectorPairs());
         $this->services = [
             new Service(
                 $keys[0],
@@ -33,7 +33,7 @@ class GenerationOfSiberiaProvider extends Provider
     public function getKeySelectorPairs(): array
     {
         return [
-            $this->generateServiceKey('1') => '',
+            $this->generateServiceKey('1') => '#eael-advance-tabs-05e5405 > div.eael-tabs-content div:nth-child(2) > table > tbody > tr:nth-child(5) > td:nth-child(2)',
         ];
     }
 }

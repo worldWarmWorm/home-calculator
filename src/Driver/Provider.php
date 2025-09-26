@@ -140,11 +140,13 @@ abstract class Provider implements ProviderInterface
             $currentTax = $taxes[$serviceKey];
             Log::create("Parsed tax $currentTax by key $serviceKey", Level::Info);
 
-            if (null !== $preventTax && $currentTax > $preventTax) {
-                $message = "Tax of $serviceKey changed from $preventTax to $currentTax";
-                Log::create($message, Level::Notice);
-                (new Notification($message, LevelEnum::NOTICE->value))->send();
+            if (null === $preventTax || $preventTax === $currentTax) {
+                continue;
             }
+
+            $message = "Tax of $serviceKey changed from $preventTax to $currentTax";
+            Log::create($message, Level::Notice);
+            (new Notification($message, LevelEnum::NOTICE->value))->send();
         }
 
         return $taxes;

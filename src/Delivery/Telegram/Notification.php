@@ -6,7 +6,7 @@ namespace HomeCalculator\Delivery\Telegram;
 
 use HomeCalculator\Delivery\Delivery;
 
-final class Alert extends Delivery
+final class Notification extends Delivery
 {
     private string $url;
 
@@ -14,7 +14,7 @@ final class Alert extends Delivery
 
     private string $query;
 
-    public function __construct(string $message)
+    public function __construct(string $message, string $level)
     {
         parent::__construct();
 
@@ -22,7 +22,7 @@ final class Alert extends Delivery
         $this->token = $_ENV['TG_BOT_TOKEN'];
         $this->query = http_build_query([
             'chat_id' => $_ENV['TG_CHAT_ID'],
-            'text' => $message
+            'text' => $this->getMessage($message, $level),
         ]);
     }
 
@@ -37,7 +37,7 @@ final class Alert extends Delivery
 
             return $return;
         } catch (\Exception $e) {
-            throw new AlertException("Couldn't send message: " . $e->getMessage());
+            throw new NotificationException("Couldn't send message: " . $e->getMessage());
         }
     }
 }

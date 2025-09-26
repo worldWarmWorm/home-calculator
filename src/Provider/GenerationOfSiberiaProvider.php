@@ -10,11 +10,11 @@ use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
 use Monolog\Level;
 
-final class ModernizationFundProvider extends Provider
+class GenerationOfSiberiaProvider extends Provider
 {
     public function __construct(string $url)
     {
-        $this->organizationName = 'Фонд модернизации ЖКХ';
+        $this->organizationName = 'ООО "Генерация Сибири"';
         $this->url = $url;
         $this->storage = Storage::getInstance();
         $this->actualizeServicesTaxes();
@@ -22,9 +22,9 @@ final class ModernizationFundProvider extends Provider
         $this->services = [
             new Service(
                 $keys[0],
-                'Взнос за капитальный ремонт',
+                'Электрическая энергия',
                 $this->storage->read($this->organizationName, $keys[0]),
-                'за 1 кв.м площади квартиры'
+                'кВт/ч'
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);
@@ -33,7 +33,7 @@ final class ModernizationFundProvider extends Provider
     public function getKeySelectorPairs(): array
     {
         return [
-            $this->generateServiceKey('1') => 'body > div.wrap.container-fluid > div > main > section > div.col-lg-8 > div.row > div.col-xs-9 > ul:nth-child(3) > li:nth-child(3)',
+            $this->generateServiceKey('1') => '',
         ];
     }
 }

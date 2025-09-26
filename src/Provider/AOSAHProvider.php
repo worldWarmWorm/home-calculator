@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use DateInvalidTimeZoneException;
-use DateMalformedStringException;
-use HomeCalculator\Driver\Parser;
 use HomeCalculator\Driver\Provider;
-use HomeCalculator\Driver\ProviderException;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
@@ -16,17 +12,13 @@ use Monolog\Level;
 
 final class AOSAHProvider extends Provider
 {
-    /**
-     * @throws DateMalformedStringException
-     * @throws DateInvalidTimeZoneException
-     */
     public function __construct(string $url)
     {
         $this->organizationName = 'АО "САХ"';
         $this->url = $url;
         $this->storage = Storage::getInstance();
         $this->actualizeServicesTaxes();
-        $keys = $this->getRegisteredServicesKeys();
+        $keys = $this->getKeySelectorPairs();
         $this->services = [
             new Service(
                 $keys[0],
@@ -38,36 +30,10 @@ final class AOSAHProvider extends Provider
         Log::create(self::class . ' constructor called', Level::Info);
     }
 
-    public function parseServicesTaxes(): array
-    {
-        $parser = new Parser();
-        $serviceKeys = $this->getRegisteredServicesKeys();
-        $callbacks = [];
-
-        foreach ($serviceKeys as $serviceKey) {
-            $callbacks[$serviceKey] = match ($serviceKey) {
-                $serviceKeys[0] => fn(): ?float => $parser->parseTax(
-                    $this->url,
-                    ''
-                ),
-                default => throw new ProviderException("Service key \"$serviceKey\" not found"),
-            };
-        }
-
-        $taxes = [];
-
-        foreach ($serviceKeys as $serviceKey) {
-            $taxes[$serviceKey] = $callbacks[$serviceKey]();
-            Log::create("Parsed tax $taxes[$serviceKey] by key $serviceKey", Level::Info);
-        }
-
-        return $taxes;
-    }
-
-    public function getRegisteredServicesKeys(): array
+    public function getKeySelectorPairs(): array
     {
         return [
-            $this->generateServiceKey('1'),
+            $this->generateServiceKey('1') => 'body > div.body > div.main > div:nth-child(2) > div.tariffs-page > div:nth-child(1) > ul > li:nth-child(6) > strong:nth-child(2)',
         ];
     }
 }

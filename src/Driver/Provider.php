@@ -8,7 +8,8 @@ use DateInvalidTimeZoneException;
 use DateMalformedStringException;
 use DateTimeImmutable;
 use DateTimeZone;
-use HomeCalculator\Delivery\Telegram\Alert;
+use HomeCalculator\Delivery\LevelEnum;
+use HomeCalculator\Delivery\Telegram\Notification;
 use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
 use Monolog\Level;
@@ -64,8 +65,8 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @throws DateMalformedStringException
      * @throws DateInvalidTimeZoneException
+     * @throws DateMalformedStringException
      */
     protected function isTimeToUpdateServicesTaxes(string $timezone): bool
     {
@@ -107,14 +108,14 @@ abstract class Provider implements ProviderInterface
     public function actualizeServicesTaxes(): void
     {
         if (
-            false === $this->isTaxesExists($this->organizationName, $this->getRegisteredServicesKeys())
+            false === $this->isTaxesExists($this->organizationName, $this->getKeySelectorPairs())
             || true === $this->isTimeToUpdateServicesTaxes(TimezoneEnum::NOVOSIBIRSK->value)
         ) {
             foreach ($this->parseServicesTaxes() as $serviceKey => $tax) {
                 if (null === $tax) {
                     $message = "Can't parse tax by serviceKey $serviceKey. Look provider's page: $this->url";
                     Log::create($message, Level::Error);
-                    (new Alert($message))->send();
+                    (new Notification($message, LevelEnum::CRITICAL->value))->send();
 
                     continue;
                 }
@@ -122,5 +123,30 @@ abstract class Provider implements ProviderInterface
                 $this->storage->write($this->organizationName, [$serviceKey => $tax]);
             }
         }
+    }
+
+    /**
+     * @return array<int, float>
+     */
+    public function parseServicesTaxes(): array
+    {
+        $parser = new Parser();
+        $serviceKeys = $this->getKeySelectorPairs();
+        $taxes = [];
+
+        foreach ($serviceKeys as $serviceKey => $htmlSelector) {
+            $preventTax = $this->storage->read($this->organizationName, $serviceKey);
+            $taxes[$serviceKey] = $parser->parseTax($this->url, $htmlSelector);
+            $currentTax = $taxes[$serviceKey];
+            Log::create("Parsed tax $currentTax by key $serviceKey", Level::Info);
+
+            if (null !== $preventTax && $currentTax > $preventTax) {
+                $message = "Tax of $serviceKey changed from $preventTax to $currentTax";
+                Log::create($message, Level::Notice);
+                (new Notification($message, LevelEnum::NOTICE->value))->send();
+            }
+        }
+
+        return $taxes;
     }
 }

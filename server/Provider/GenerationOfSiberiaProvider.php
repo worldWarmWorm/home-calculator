@@ -10,7 +10,7 @@ use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
 use Monolog\Level;
 
-class GenerationOfSiberiaProvider extends Provider
+final class GenerationOfSiberiaProvider extends Provider
 {
     public function __construct(string $url)
     {
@@ -25,6 +25,18 @@ class GenerationOfSiberiaProvider extends Provider
                 'Электрическая энергия',
                 $this->storage->read($this->organizationName, $keys[0]),
                 'кВт/ч'
+            ),
+            new Service(
+                $keys[1],
+                'Тепловая энергия',
+                $this->storage->read($this->organizationName, $keys[1]),
+                'Гкал'
+            ),
+            new Service(
+                $keys[2],
+                'Горячая вода',
+                $this->storage->read($this->organizationName, $keys[2]),
+                "М<sup>3</sup>"
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);
@@ -32,8 +44,12 @@ class GenerationOfSiberiaProvider extends Provider
 
     public function getKeySelectorPairs(): array
     {
+        $parent = '#eael-advance-tabs-05e5405 > div.eael-tabs-content div:nth-child(2) > table > tbody';
+
         return [
-            $this->generateServiceKey('1') => '#eael-advance-tabs-05e5405 > div.eael-tabs-content div:nth-child(2) > table > tbody > tr:nth-child(5) > td:nth-child(2)',
+            $this->generateServiceKey('1') => "$parent > tr:nth-child(5) > td:nth-child(2)",
+            $this->generateServiceKey('2') => "$parent > tr:nth-child(13) > td:nth-child(2)",
+            $this->generateServiceKey('3') => "$parent > tr:nth-child(15) > td:nth-child(2)",
         ];
     }
 }

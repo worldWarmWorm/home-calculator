@@ -35,7 +35,7 @@
   },
   "autoload": {
     "psr-4": {
-      "HomeCalculator\\": "src/"
+      "HomeCalculator\\": "server"
     },
     "exclude-from-classmap": [
       "/tests"

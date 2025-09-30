@@ -24,7 +24,7 @@ final class AOSAHProvider extends Provider
                 $keys[0],
                 'Обращение с ТКО',
                 $this->storage->read($this->organizationName, $keys[0]),
-                'с одного человека, прописанного в квартире'
+                'с одного человека'
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);

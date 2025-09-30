@@ -14,7 +14,7 @@ $app = App::init([
     new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
     new GenerationOfSiberiaProvider('https://gensib54.ru/'),
     new GorvodokanalProvider('https://www.gorvodokanal.com/abonents/tariffs/'),
-    new GorskyProvider(''),
+//    new GorskyProvider(''),
 ]);
 ?>
 
@@ -29,36 +29,57 @@ $app = App::init([
     <title><?= $app->getName() ?></title>
 </head>
 <body>
-    <header class="header">
+    <div class="app">
+        <header class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col col-12">
+                        <h1 class="text-center"><?= $app->getName() ?></h1>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-    </header>
+        <main class="main">
+            <div class="container">
+                <blockquote class="label300">Тарифы всех поставщиков услуг указаны за актуальный период для адреса г.Новосибирск, ул.Березовая, д.13</blockquote>
+                <h4>Организации</h4>
 
-    <main class="main">
+                <div class="row">
+                    <div class="col col-12">
+                        <div class="providers">
 
-    </main>
+                        </div>
+                    </div>
+                </div>
 
-    <footer class="footer">
+                <ul>
+                    <?php foreach ($app->getProviders() as $provider) { ?>
+                        <li><h3><?= $provider->getOrganizationName() ?></h3></li>
+                        <h5>Услуги</h5>
+                        <ul>
+                            <?php foreach ($provider->getServices() as $service) { ?>
+                                <li><?= $service->getName() ?></li>
+                                <li><?= $service->getTax() . ' ₽ ' ?><button class="btn" type="button" data-description="<?= $service->getUnit() ?>">?</button></li>
+                            <?php } ?>
+                        </ul>
+                        <li><a href="<?= $provider->getUrl() ?>" target="_blank">Перейти к странице тарифов</a></li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </main>
 
-    </footer>
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col col-12">
+                        Написать разработчикам
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
 
-
-    <h1><?= $app->getName() ?></h1>
-    <blockquote>Тарифы всех поставщиков услуг указаны за актуальный период для адреса г.Новосибирск, ул.Березовая, д.13</blockquote>
-    <h2>Организации</h2>
-    <ul>
-        <?php foreach ($app->getProviders() as $provider) { ?>
-            <li><h3><?= $provider->getOrganizationName() ?></h3></li>
-            <h4>Услуги</h4>
-            <ul>
-                <?php foreach ($provider->getServices() as $service) { ?>
-                    <li><?= $service->getName() ?></li>
-                    <li><?= $service->getTax() . ' ₽ ' . $service->getUnit() ?></li>
-                <?php } ?>
-            </ul>
-            <li><a href="<?= $provider->getUrl() ?>" target="_blank">Перейти к странице тарифов</a></li>
-            <hr>
-        <?php } ?>
-    </ul>
     <script defer src="./client/js/main.js"></script>
 </body>
 </html>

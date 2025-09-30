@@ -25,13 +25,13 @@ final class GorskyProvider extends Provider
                 $keys[0],
                 'Текущее содержание',
                 (float)'32.23',
-                "М<sup>2</sup>"
+                "За метр квадратный"
             ),
             new Service(
                 $keys[1],
                 'Текущий ремонт',
                 (float)'3',
-                "М<sup>2</sup>"
+                "За метр квадратный"
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);

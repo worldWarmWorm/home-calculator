@@ -19,7 +19,7 @@ final class App
 
     private function __construct(array $providers)
     {
-        $this->name = "Home calculator";
+        $this->name = "Домашний калькулятор";
         $this->providers = $providers;
     }
 

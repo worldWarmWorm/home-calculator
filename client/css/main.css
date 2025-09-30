@@ -1,8 +1,13 @@
 @import "style/font.css";
 @import "style/common.css";
 @import "style/grid.css";
+@import "style/adaptive.css";
 
 /* core*/
+.app {
+    background-color: var(--light);
+    padding: 20px;
+    border-radius: var(--radius);
+    margin: 20px auto;
+}
 
-
-@import "style/adaptive.css";

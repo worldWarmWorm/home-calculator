@@ -24,13 +24,13 @@ final class GorvodokanalProvider extends Provider
                 $keys[0],
                 'Холодная вода',
                 $this->storage->read($this->organizationName, $keys[0]),
-                "М<sup>3</sup>"
+                "За метр кубический"
             ),
             new Service(
                 $keys[1],
                 'Водоотведение',
                 $this->storage->read($this->organizationName, $keys[1]),
-                "М<sup>3</sup>"
+                "За метр кубический"
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);

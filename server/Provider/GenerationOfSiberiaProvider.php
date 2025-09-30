@@ -36,7 +36,7 @@ final class GenerationOfSiberiaProvider extends Provider
                 $keys[2],
                 'Горячая вода',
                 $this->storage->read($this->organizationName, $keys[2]),
-                "М<sup>3</sup>"
+                "За метр кубический"
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);

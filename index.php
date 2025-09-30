@@ -25,9 +25,23 @@ $app = App::init([
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./client/css/main.css">
     <title><?= $app->getName() ?></title>
 </head>
 <body>
+    <header class="header">
+
+    </header>
+
+    <main class="main">
+
+    </main>
+
+    <footer class="footer">
+
+    </footer>
+
+
     <h1><?= $app->getName() ?></h1>
     <blockquote>Тарифы всех поставщиков услуг указаны за актуальный период для адреса г.Новосибирск, ул.Березовая, д.13</blockquote>
     <h2>Организации</h2>
@@ -45,5 +59,6 @@ $app = App::init([
             <hr>
         <?php } ?>
     </ul>
+    <script defer src="./client/js/main.js"></script>
 </body>
 </html>

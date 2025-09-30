@@ -1,0 +1,31 @@
+:root {
+    /*backgrounds*/
+    --bg: #e2e8fd;
+    --app: #f5f8ff;
+    --grad: linear-gradient(#5365e2 0%, #5e67e4 100%);
+
+    /*colors*/
+    --accent: #5565e2;
+    --accent2: #6169e9;
+    --label: #3c3e5d;
+    --text: #7d7f88;
+    --placeholder: #b6b4b4;
+    --light: #ffffff;
+    --remove: #e8797d;
+    --add: #87e768;
+    --edit: #d082ff;
+    --analyze: #68dbfe;
+    --predict: #f9e002;
+    --disable: #c4c4c4;
+
+    /*shadows*/
+    --shadow-hover: 0 2px 5px rgba(0,0,0,.2);
+    --shadow-active: 0 1px 3px rgba(0,0,0,.2);
+    --shadow-hover2: 0 3px 10px rgba(0,0,0,.4);
+    --shadow-active2: 0 1px 3px rgba(0,0,0,.4);
+
+    /*indication*/
+    --1: #87e768;
+    --2: #de835b;
+    --3: #de5b5b;
+}

@@ -1,21 +1,18 @@
 .container {
     width: 100%;
-    max-width: 767px;
     margin: 0 auto;
 }
 
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-    margin-bottom: 2rem;
+    margin: 2rem -30px;
 }
 
 .col {
     width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 30px;
+    padding-left: 30px;
     max-width: 100%;
 }
 
@@ -53,6 +50,10 @@
 
 .col-8 {
     width: 66.666%;
+}
+
+.col-9 {
+    width: 74.999%;
 }
 
 .col-10 {

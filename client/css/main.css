@@ -3,11 +3,42 @@
 @import "style/grid.css";
 @import "style/adaptive.css";
 
-/* core*/
-.app {
-    background-color: var(--light);
-    padding: 20px;
-    border-radius: var(--radius);
-    margin: 20px auto;
+.body {
+    background-color: #fff;
 }
+
+.app {
+    background-color: var(--back);
+    border-radius: 45px;
+}
+
+aside, main {
+    padding: 30px;
+}
+
+aside {
+    color: var(--text-inactive);
+}
+
+.calculator {
+    background-color: var(--calc);
+    border-top-left-radius: 45px;
+    margin-top: 45px;
+    color: var(--text);
+}
+
+.summary {
+    background-color: var(--summary);
+    color: var(--summary-text);
+    border-radius: 23px;
+    padding: 30px;
+}
+
+.providers .provider {
+    border-bottom: 1px dashed var(--placeholder);
+    padding: 0 23px;
+}
+
+
+
 

@@ -6,61 +6,13 @@
     box-sizing: border-box;
     font-family: 'Poppins', system-ui, sans-serif;
     font-size: 16px;
-    color: var(--text);
     font-weight: 400;
 }
 
 body {
-    max-width: 767px;
+    max-width: 1440px;
     width: 100%;
     margin: 0 auto;
-    background-color: var(--bg);
-}
-
-h1, h2, h3, h4, h5, h6, .label500, .label300 {
-    color: var(--label);
-}
-
-h6 {
-    font-size: 1.2em;
-    margin: 0.6em auto;
-}
-
-h5 {
-    font-size: 1.4em;
-    margin: 0.7em auto;
-}
-
-h4 {
-    font-size: 1.6em;
-    margin: 0.8em auto;
-}
-
-h3 {
-    font-size: 1.8em;
-    margin: 0.9em auto;
-}
-
-h2 {
-    font-size: 2.0em;
-    margin: 1.0em auto;
-}
-
-h1 {
-    font-size: 2.2em;
-    margin: 1.1em auto;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
-}
-
-.label500 {
-    font-weight: 500;
-}
-
-.label300 {
-    font-weight: 300;
 }
 
 a, input, button, textarea {
@@ -97,12 +49,12 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--light);
+    /*background: var(--light);*/
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--accent);
+    /*background: var(--accent);*/
     outline: none;
     border-radius: 5px;
 }
@@ -124,20 +76,20 @@ img {
     min-width: 45px;
     max-height: 40px;
     margin: 10px 5px;
-    background-color: var(--light);
+    /*background-color: var(--light);*/
     position: relative;
 }
 
 .btn:hover {
-    box-shadow: var(--shadow-hover);
+    /*box-shadow: var(--shadow-hover);*/
 }
 
 .btn:active {
-    box-shadow: var(--shadow-active);
+    /*box-shadow: var(--shadow-active);*/
 }
 
 .btn[disabled] {
-    background-color: var(--disable);
+    /*background-color: var(--disable);*/
 }
 
 .btn[disabled]:hover,
@@ -155,7 +107,7 @@ img {
     padding: 3px 5px;
     width: max-content;
     font-size: 12px;
-    color: var(--light);
+    /*color: var(--light);*/
     border-radius: 5px;
     background-color: #333;
     transition: .3s all;

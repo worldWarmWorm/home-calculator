@@ -11,9 +11,9 @@ require_once "vendor/autoload.php";
 
 $app = App::init([
     new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
-    new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
-    new GenerationOfSiberiaProvider('https://gensib54.ru/'),
-    new GorvodokanalProvider('https://www.gorvodokanal.com/abonents/tariffs/'),
+//    new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
+//    new GenerationOfSiberiaProvider('https://gensib54.ru/'),
+//    new GorvodokanalProvider('https://www.gorvodokanal.com/abonents/tariffs/'),
 //    new GorskyProvider(''),
 ]);
 ?>
@@ -30,54 +30,60 @@ $app = App::init([
 </head>
 <body>
     <div class="app">
-        <header class="header">
-            <div class="container">
-                <div class="row">
-                    <div class="col col-12">
-                        <h1 class="text-center"><?= $app->getName() ?></h1>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <main class="main">
-            <div class="container">
-                <blockquote class="label300">Тарифы всех поставщиков услуг указаны за актуальный период для адреса г.Новосибирск, ул.Березовая, д.13</blockquote>
-                <h4>Организации</h4>
-
-                <div class="row">
-                    <div class="col col-12">
-                        <div class="providers">
-
+        <div class="back-layout container">
+            <div class="row">
+                <div class="col col-3">
+                    <aside class="aside">
+                        <div class="logo">
+                            <img src="" alt="calc-logo.png">
+                            <span><?= $app->getName() ?></span>
                         </div>
-                    </div>
+                        <nav class="nav">
+                            <ul>
+                                <li>Пункт 1</li>
+                                <li>Пункт 2</li>
+                                <li>Пункт 3</li>
+                            </ul>
+                        </nav>
+                    </aside>
                 </div>
+                <div class="col col-9">
+                    <main class="calculator">
+                        <div class="row">
+                            <div class="col col-8">
+                                <div class="inputs">
+                                    <blockquote class="label300">Тарифы всех поставщиков услуг указаны за актуальный период для адреса г.Новосибирск, ул.Березовая, д.13</blockquote>
+                                    <h4>Организации</h4>
 
-                <ul>
-                    <?php foreach ($app->getProviders() as $provider) { ?>
-                        <li><h3><?= $provider->getOrganizationName() ?></h3></li>
-                        <h5>Услуги</h5>
-                        <ul>
-                            <?php foreach ($provider->getServices() as $service) { ?>
-                                <li><?= $service->getName() ?></li>
-                                <li><?= $service->getTax() . ' ₽ ' ?><button class="btn" type="button" data-description="<?= $service->getUnit() ?>">?</button></li>
-                            <?php } ?>
-                        </ul>
-                        <li><a href="<?= $provider->getUrl() ?>" target="_blank">Перейти к странице тарифов</a></li>
-                    <?php } ?>
-                </ul>
-            </div>
-        </main>
-
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col col-12">
-                        Написать разработчикам
-                    </div>
+                                    <ul class="providers">
+                                        <?php foreach ($app->getProviders() as $providerKey => $provider) { ?>
+                                            <li class="provider provider-<?= $providerKey ?>">
+                                                <h3><?= $provider->getOrganizationName() ?></h3>
+                                                <h5>Услуги</h5>
+                                                <ul class="services">
+                                                    <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
+                                                        <li class="service service-<?= $serviceKey ?>">
+                                                            <p><?= $service->getName() ?></p>
+                                                            <p><?= $service->getTax() . ' ₽ ' ?><button class="btn" type="button" data-description="<?= $service->getUnit() ?>">?</button></p>
+                                                        </li>
+                                                    <?php } ?>
+                                                </ul>
+                                                <a href="<?= $provider->getUrl() ?>" target="_blank">Перейти к странице тарифов</a>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col col-4">
+                                <div class="summary">
+                                    summary
+                                </div>
+                            </div>
+                        </div>
+                    </main>
                 </div>
             </div>
-        </footer>
+        </div>
     </div>
 
     <script defer src="./client/js/main.js"></script>

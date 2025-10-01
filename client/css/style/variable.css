@@ -1,16 +1,43 @@
 :root {
-    /*colors*/
-    --label: #3c3e5d;
-    --text: #5d5e63;
-    --placeholder: #b6b4b4;
-    --light: #ffffff;
-    --disable: #c4c4c4;
-    --bg: #e9f1ec;
-    --accent: #5bcf88;
+    /*COMMON*/
+    --back: #719091;
+    --radius: 12,5px;
+
+    /*===============================*/
+
+    /*ASIDE*/
+    /*background-colors*/
+    --item-active: #5e8281;
+
+    /*text-colors*/
+    --text-active: #fff;
+    --text-inactive: #edf5f0;
+
+    /*===============================*/
+
+    /*CALCULATOR*/
+    /*background-colors*/
+    --input: #c5e6ed;
+    --calc: #f0f5f5;
+    --button: #5db7cd;
+
+    /*text-colors*/
+    --placeholder: #b6dfea;
+    --text: #282828;
+    --button-clear-text: #5db7cd;
+    --button-calc-text: #fff;
 
     /*shadows*/
-    --shadow-hover: 0 2px 5px rgba(0,0,0,.2);
-    --shadow-active: 0 1px 3px rgba(0,0,0,.2);
+    --input-active: 0 0 1px #282828;
+    --input-inactive: 0 0 1px #b6dfea;
+    --button-clear: 0 0 1px #5db7cd;
 
-    --radius: 10px;
+    /*===============================*/
+
+    /*SUMMARY*/
+    /*background-colors*/
+    --summary: #fff;
+
+    /*text-colors*/
+    --summary-text: #5db7cd;
 }

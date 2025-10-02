@@ -40,9 +40,18 @@ $app = App::init([
                         </div>
                         <nav class="nav">
                             <ul>
-                                <li>Пункт 1</li>
-                                <li>Пункт 2</li>
-                                <li>Пункт 3</li>
+                                <li>
+                                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                    Пункт 1
+                                </li>
+                                <li>
+                                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                    Пункт 2
+                                </li>
+                                <li>
+                                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                    Пункт 3
+                                </li>
                             </ul>
                         </nav>
                     </aside>
@@ -86,6 +95,6 @@ $app = App::init([
         </div>
     </div>
 
-    <script defer src="./client/js/main.js"></script>
+    <script type="module" src="./client/js/main.js" defer></script>
 </body>
 </html>

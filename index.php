@@ -67,8 +67,8 @@ $app = App::init([
                         <div class="row">
                             <div class="col col-8">
                                 <div class="inputs">
-                                    <blockquote class="label300">Тарифы всех поставщиков услуг указаны за актуальный период для адреса г.Новосибирск, ул.Березовая, д.13</blockquote>
-                                    <h4>Организации</h4>
+                                    <blockquote>Тарифы поставщиков услуг для взяты с их официальных публичных сайтов</blockquote>
+                                    <h4>Введите показатели все показатели для расчета</h4>
 
                                     <ul class="providers">
                                         <?php foreach ($app->getProviders() as $providerKey => $provider) { ?>

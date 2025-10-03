@@ -35,8 +35,9 @@ aside {
 }
 
 .providers .provider {
-    border-bottom: 1px dashed var(--placeholder);
-    padding: 0 23px;
+    border: 1px dashed var(--placeholder);
+    border-radius: 15px;
+    padding: 15px 23px;
 }
 
 .logo {
@@ -84,6 +85,18 @@ aside {
 .item.active a {
     background-color: var(--item-active);
     color: var(--text-active);
+}
+
+.inputs blockquote {
+    padding: 15px;
+    background-color: var(--accent);
+    border-radius: 15px;
+    color: var(--text-inactive);
+}
+
+.inputs h4 {
+    margin: 15px 0;
+
 }
 
 

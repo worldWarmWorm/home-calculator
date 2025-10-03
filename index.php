@@ -35,22 +35,28 @@ $app = App::init([
                 <div class="col col-3">
                     <aside class="aside">
                         <div class="logo">
-                            <img src="" alt="calc-logo.png">
+                            <i class="fa fa-calculator" aria-hidden="true"></i>
                             <span><?= $app->getName() ?></span>
                         </div>
                         <nav class="nav">
                             <ul>
-                                <li>
-                                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-                                    Пункт 1
+                                <li class="item active">
+                                    <a href="#">
+                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                        Пункт 1
+                                    </a>
                                 </li>
-                                <li>
-                                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-                                    Пункт 2
+                                <li class="item">
+                                    <a href="#">
+                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                        Пункт 1
+                                    </a>
                                 </li>
-                                <li>
-                                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-                                    Пункт 3
+                                <li class="item">
+                                    <a href="#">
+                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                        Пункт 1
+                                    </a>
                                 </li>
                             </ul>
                         </nav>

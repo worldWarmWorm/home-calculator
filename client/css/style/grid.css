@@ -6,13 +6,13 @@
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin: 2rem -30px;
+    margin: 2rem -15px;
 }
 
 .col {
     width: 100%;
-    padding-right: 30px;
-    padding-left: 30px;
+    padding-right: 15px;
+    padding-left: 15px;
     max-width: 100%;
 }
 

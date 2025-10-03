@@ -39,6 +39,52 @@ aside {
     padding: 0 23px;
 }
 
+.logo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo i {
+    margin: 20px 20px 30px 30px;
+}
+
+.logo i::before {
+    font-size: 4em;
+    line-height: 4rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+.logo span {
+    font-size: 1.4em;
+    line-height: 1.4em;
+    text-align: center;
+    font-weight: 700;
+}
+
+.item a {
+    padding: 15px;
+    display: block;
+    color: var(--text-inactive);
+    border-radius: 15px;
+    font-weight: 500;
+}
+
+.item a:active {
+    background-color: var(--item-active);
+}
+
+.item i {
+    margin-right: 15px;
+}
+
+.item.active a {
+    background-color: var(--item-active);
+    color: var(--text-active);
+}
 
 
 

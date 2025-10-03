@@ -21,6 +21,10 @@ a, input, button, textarea {
     outline: none;
 }
 
+a {
+    text-decoration: none;
+}
+
 input, textarea {
     padding: 20px;
 }

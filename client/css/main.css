@@ -94,10 +94,11 @@ aside {
     color: var(--text-inactive);
 }
 
-.inputs h4 {
+.inputs > h3 {
     margin: 15px 0;
-
 }
+
+.inputs .
 
 
 

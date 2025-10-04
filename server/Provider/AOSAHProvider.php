@@ -14,6 +14,7 @@ final class AOSAHProvider extends Provider
 {
     public function __construct(string $url)
     {
+        $this->icon = '<i class="fa fa-trash-o" aria-hidden="true"></i>';
         $this->organizationName = 'АО "САХ"';
         $this->url = $url;
         $this->storage = Storage::getInstance();

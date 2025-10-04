@@ -16,6 +16,8 @@ use Monolog\Level;
 
 abstract class Provider implements ProviderInterface
 {
+    protected string $icon;
+
     protected string $organizationName;
 
     protected string $url;
@@ -30,6 +32,11 @@ abstract class Provider implements ProviderInterface
     public function getUrl(): string
     {
         return $this->url;
+    }
+
+    public function getIcon(): string
+    {
+        return $this->icon;
     }
 
     public function getOrganizationName(): string

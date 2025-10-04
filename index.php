@@ -65,31 +65,38 @@ $app = App::init([
                 <div class="col col-9">
                     <main class="calculator">
                         <div class="row">
-                            <div class="col col-8">
+                            <div class="col col-7">
                                 <div class="inputs">
-                                    <blockquote>Тарифы поставщиков услуг для взяты с их официальных публичных сайтов</blockquote>
-                                    <h4>Введите показатели все показатели для расчета</h4>
+                                    <blockquote>Тарифы поставщиков услуг взяты с их официальных публичных сайтов</blockquote>
+                                    <h3>Заполните поля для расчета</h3>
 
                                     <ul class="providers">
                                         <?php foreach ($app->getProviders() as $providerKey => $provider) { ?>
-                                            <li class="provider provider-<?= $providerKey ?>">
-                                                <h3><?= $provider->getOrganizationName() ?></h3>
-                                                <h5>Услуги</h5>
-                                                <ul class="services">
-                                                    <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
-                                                        <li class="service service-<?= $serviceKey ?>">
-                                                            <p><?= $service->getName() ?></p>
-                                                            <p><?= $service->getTax() . ' ₽ ' ?><button class="btn" type="button" data-description="<?= $service->getUnit() ?>">?</button></p>
-                                                        </li>
-                                                    <?php } ?>
-                                                </ul>
-                                                <a href="<?= $provider->getUrl() ?>" target="_blank">Перейти к странице тарифов</a>
-                                            </li>
+                                        <li class="provider provider-<?= $providerKey ?>">
+                                            <h4 class="organization">
+                                                <span class="icon"><?= $provider->getIcon() ?></span>
+                                                <span class="name"><?= $provider->getOrganizationName() ?></span>
+                                                <span class="number"><?= $providerKey + 1 ?></span>
+                                            </h4>
+                                            <h4>Услуги</h4>
+                                            <ul class="services">
+                                                <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
+                                                <li class="service service-<?= $serviceKey ?>">
+                                                    <label for="" class="label">
+                                                        <?= $service->getName() ?> (₽/<?= $service->getUnit() ?>)
+                                                        <input type="text" readonly value="<?= $service->getTax() ?>">
+                                                    </label>
+                                                </li>
+                                                <?php } ?>
+                                            </ul>
+                                            <a href="<?= $provider->getUrl() ?>" target="_blank">Перейти к странице тарифов</a>
+                                        </li>
                                         <?php } ?>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col col-4">
+
+                            <div class="col col-5">
                                 <div class="summary">
                                     summary
                                 </div>

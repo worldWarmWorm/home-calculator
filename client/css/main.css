@@ -95,10 +95,47 @@ aside {
 }
 
 .inputs > h3 {
-    margin: 15px 0;
+    margin: 30px 0 15px;
+    font-size: 1.2em;
+    font-weight: 500;
+    line-height: 1.2em;
 }
 
-.inputs .
+.inputs .providers .organization {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 30px;
+}
 
+.inputs .providers .organization .name {
+    flex-grow: 1;
+    padding: 0 15px;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    font-weight: 500;
+}
+
+.inputs .providers .organization .number {
+    background-color: var(--button);
+    color: var(--text-inactive);
+    padding: 8px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 1em;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.inputs .providers .organization .icon i:before {
+    font-size: 1.4em;
+    line-height: 1.4em;
+}
+
+.inputs .providers .provider > a {
+    color: var(--button);
+}
 
 

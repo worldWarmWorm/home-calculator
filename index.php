@@ -78,18 +78,17 @@ $app = App::init([
                                                 <span class="name"><?= $provider->getOrganizationName() ?></span>
                                                 <span class="number"><?= $providerKey + 1 ?></span>
                                             </h4>
-                                            <h4>Услуги</h4>
                                             <ul class="services">
                                                 <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
                                                 <li class="service service-<?= $serviceKey ?>">
                                                     <label for="" class="label">
                                                         <?= $service->getName() ?> (₽/<?= $service->getUnit() ?>)
-                                                        <input type="text" readonly value="<?= $service->getTax() ?>">
+                                                        <input name="<?= $service->getKey() ?>" type="text" readonly value="<?= $service->getTax() ?>">
                                                     </label>
                                                 </li>
                                                 <?php } ?>
                                             </ul>
-                                            <a href="<?= $provider->getUrl() ?>" target="_blank">Перейти к странице тарифов</a>
+                                            <a href="<?= $provider->getUrl() ?>" target="_blank">На страницу тарифов</a>
                                         </li>
                                         <?php } ?>
                                     </ul>

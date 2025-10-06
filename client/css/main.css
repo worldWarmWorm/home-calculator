@@ -10,6 +10,7 @@
 .app {
     background-color: var(--back);
     border-radius: 45px;
+    height: 100%;
 }
 
 aside, main {
@@ -25,6 +26,16 @@ aside {
     border-top-left-radius: 45px;
     margin-top: 45px;
     color: var(--text);
+}
+
+.calculator .tab-wrapper {
+    position: relative;
+}
+
+.calculator .tab-wrapper .tab-content {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .summary {
@@ -70,19 +81,20 @@ aside {
     font-weight: 700;
 }
 
-.item a {
+.item {
     padding: 15px;
     display: block;
     color: var(--text-inactive);
     border-radius: 15px;
     font-weight: 500;
+    cursor: pointer;
 }
 
-.item a:active {
+.item:active {
     background-color: var(--item-active);
 }
 
-.item.active a {
+.item.active {
     background-color: var(--item-active);
     color: var(--text-active);
 }

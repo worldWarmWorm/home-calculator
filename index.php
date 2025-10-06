@@ -39,79 +39,84 @@ $app = App::init([
                             <span><?= $app->getName() ?></span>
                         </div>
                         <nav class="nav">
-                            <ul>
-                                <li class="item active">
-                                    <a href="#">Калькулятор</a>
-                                </li>
-                                <li class="item">
-                                    <a href="#">Добавить поставщика услуг</a>
-                                </li>
-                                <li class="item">
-                                    <a href="#">Сообщить о неактуальности тарифа</a>
-                                </li>
+                            <ul class="tab-switcher">
+                                <li class="item active">Калькулятор</li>
+                                <li class="item">Добавить поставщика услуг</li>
+                                <li class="item">Сообщить о неактуальности тарифа</li>
                             </ul>
                         </nav>
                     </aside>
                 </div>
                 <div class="col col-9">
                     <main class="calculator">
-                        <div class="row">
-                            <div class="col col-7">
-                                <form action="#" class="inputs">
-                                    <blockquote>Тарифы поставщиков услуг взяты с их официальных публичных сайтов</blockquote>
-                                    <h3>Заполните поля для расчета</h3>
-                                    <ul class="providers">
-                                        <?php foreach ($app->getProviders() as $providerKey => $provider) { ?>
-                                        <li class="provider provider-<?= $providerKey ?>">
-                                            <h4 class="organization">
-                                                <span class="name"><?= $provider->getOrganizationName() ?></span>
-                                                <span class="number"><?= $providerKey + 1 ?></span>
-                                            </h4>
-                                            <ul class="services">
-                                                <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
-                                                <li class="service service-<?= $serviceKey ?>">
-                                                    <label class="label">
-                                                        <?= $service->getName() ?> (₽/<?= $service->getUnit() ?>)
-                                                        <input name="<?= $service->getKey() ?>" type="text" readonly value="<?= $service->getTax() ?>">
-                                                    </label>
-                                                    <?php foreach ($service->getMultipliers() as $multiplierKey => $multiplier) { ?>
-                                                    <label for="<?= $service->getKey() ?>-<?= $multiplierKey ?>" class="label">
-                                                        <?= $multiplier->getLabel() ?> (<?= $multiplier->getMeasure() ?>)
-                                                        <input
-                                                            id="<?= $service->getKey() ?>-<?= $multiplierKey ?>"
-                                                            name="<?= $multiplier->getName() ?>"
-                                                            type="number"
-                                                            value=""
-                                                            placeholder="Ввод..."
-                                                            required
-                                                            oninvalid="this.setCustomValidity('Пропустили обязательное поле для ввода')"
-                                                            oninput="this.setCustomValidity('')"
-                                                            min="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
-                                                            max="1000"
-                                                            step="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
-                                                        >
-                                                    </label>
-                                                    <?php } ?>
+                        <div class="tab-wrapper">
+                            <div class="row tab-content show">
+                                <div class="col col-7">
+                                    <form action="#" class="inputs">
+                                        <blockquote>Тарифы поставщиков услуг взяты с их официальных публичных сайтов</blockquote>
+                                        <h3>Заполните поля для расчета</h3>
+                                        <ul class="providers">
+                                            <?php foreach ($app->getProviders() as $providerKey => $provider) { ?>
+                                                <li class="provider provider-<?= $providerKey ?>">
+                                                    <h4 class="organization">
+                                                        <span class="name"><?= $provider->getOrganizationName() ?></span>
+                                                        <span class="number"><?= $providerKey + 1 ?></span>
+                                                    </h4>
+                                                    <ul class="services">
+                                                        <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
+                                                            <li class="service service-<?= $serviceKey ?>">
+                                                                <label class="label">
+                                                                    <?= $service->getName() ?> (₽/<?= $service->getUnit() ?>)
+                                                                    <input name="<?= $service->getKey() ?>" type="text" readonly value="<?= $service->getTax() ?>">
+                                                                </label>
+                                                                <?php foreach ($service->getMultipliers() as $multiplierKey => $multiplier) { ?>
+                                                                    <label for="<?= $service->getKey() ?>-<?= $multiplierKey ?>" class="label">
+                                                                        <?= $multiplier->getLabel() ?> (<?= $multiplier->getMeasure() ?>)
+                                                                        <input
+                                                                                id="<?= $service->getKey() ?>-<?= $multiplierKey ?>"
+                                                                                name="<?= $multiplier->getName() ?>"
+                                                                                type="number"
+                                                                                value=""
+                                                                                placeholder="Ввод..."
+                                                                                required
+                                                                                oninvalid="this.setCustomValidity('Пропустили обязательное поле для ввода')"
+                                                                                oninput="this.setCustomValidity('')"
+                                                                                min="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
+                                                                                max="1000"
+                                                                                step="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
+                                                                        >
+                                                                    </label>
+                                                                <?php } ?>
+                                                            </li>
+                                                        <?php } ?>
+                                                    </ul>
+                                                    <a href="<?= $provider->getUrl() ?>" target="_blank">
+                                                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                        На страницу тарифов
+                                                    </a>
                                                 </li>
-                                                <?php } ?>
-                                            </ul>
-                                            <a href="<?= $provider->getUrl() ?>" target="_blank">
-                                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                                                На страницу тарифов
-                                            </a>
-                                        </li>
-                                        <?php } ?>
-                                    </ul>
-                                    <div class="buttons">
-                                        <button id="btn-calc" type="submit" class="btn btn-calc">Посчитать</button>
-                                        <button type="reset" class="btn btn-clear">Очистить</button>
+                                            <?php } ?>
+                                        </ul>
+                                        <div class="buttons">
+                                            <button id="btn-calc" type="submit" class="btn btn-calc">Посчитать</button>
+                                            <button type="reset" class="btn btn-clear">Очистить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col col-5">
+                                    <div id="summary" class="summary">
+                                        summary
                                     </div>
-                                </form>
+                                </div>
                             </div>
-
-                            <div class="col col-5">
-                                <div id="summary" class="summary">
-                                    summary
+                            <div class="row tab-content hide">
+                                <div class="col col-12">
+                                    add provider
+                                </div>
+                            </div>
+                            <div class="row tab-content hide">
+                                <div class="col col-12">
+                                    incorrect taxes
                                 </div>
                             </div>
                         </div>

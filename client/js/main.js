@@ -1,5 +1,35 @@
-import {Element} from "./modules/Element.js";
-
 document.addEventListener("DOMContentLoaded", () => {
-    const element = new Element();
+    let item = document.querySelectorAll('.item'),
+        tabSwitcher = document.querySelector('.tab-switcher'),
+        tabContent = document.querySelectorAll('.tab-content');
+
+    function hideTabContent(a) {
+        for (let i = a; i < tabContent.length; i++) {
+            tabContent[i].classList.remove('show');
+            tabContent[i].classList.add('hide');
+        }
+    }
+
+    hideTabContent(1);
+
+    function showTabContent(b) {
+        if (tabContent[b].classList.contains('hide')) {
+            tabContent[b].classList.remove('hide');
+            tabContent[b].classList.add('show');
+        }
+    }
+
+    tabSwitcher.addEventListener('click', function(event) {
+        let target = event.target;
+        if (target && target.classList.contains('item')) {
+            for(let i = 0; i < item.length; i++) {
+                if (target == item[i]) {
+                    hideTabContent(0);
+                    showTabContent(i);
+                    break;
+                }
+            }
+        }
+
+    });
 });

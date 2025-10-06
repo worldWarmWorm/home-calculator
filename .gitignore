@@ -1,6 +1,7 @@
 #folders
 /.idea
 /vendor
+/node_modules
 
 #system
 composer.lock
@@ -11,5 +12,6 @@ app.log
 #files
 db.json
 last_parse_date.txt
+package-lock.json
 
 management.txt

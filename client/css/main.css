@@ -82,10 +82,6 @@ aside {
     background-color: var(--item-active);
 }
 
-.item i {
-    margin-right: 15px;
-}
-
 .item.active a {
     background-color: var(--item-active);
     color: var(--text-active);

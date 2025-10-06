@@ -41,22 +41,13 @@ $app = App::init([
                         <nav class="nav">
                             <ul>
                                 <li class="item active">
-                                    <a href="#">
-                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-                                        Пункт 1
-                                    </a>
+                                    <a href="#">Калькулятор</a>
                                 </li>
                                 <li class="item">
-                                    <a href="#">
-                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-                                        Пункт 1
-                                    </a>
+                                    <a href="#">Добавить поставщика услуг</a>
                                 </li>
                                 <li class="item">
-                                    <a href="#">
-                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-                                        Пункт 1
-                                    </a>
+                                    <a href="#">Сообщить о неактуальности тарифа</a>
                                 </li>
                             </ul>
                         </nav>

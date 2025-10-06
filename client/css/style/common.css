@@ -29,11 +29,18 @@ input, textarea {
     padding: 15px;
     border: none;
     background-color: var(--input);
+    box-shadow: inset var(--input-inactive);
     width: 100%;
+}
+
+:is(input, textarea):focus {
+    box-shadow: inset var(--input-active);
 }
 
 input[readonly] {
     cursor: default;
+    background-color: var(--static-input);
+    box-shadow: none !important;
 }
 
 textarea {
@@ -41,7 +48,7 @@ textarea {
 }
 
 ::placeholder {
-    color: var(--placeholder);
+    color: var(--button);
 }
 
 ul, ol {
@@ -74,22 +81,27 @@ img {
     margin: 3em 0;
 }
 
-/*.btn {*/
-/*    border: none;*/
-/*    border-radius: 10px;*/
-/*    padding: 10px 15px;*/
-/*    cursor: pointer;*/
-/*    font-size: inherit;*/
-/*    font-weight: 500;*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    min-width: 45px;*/
-/*    max-height: 40px;*/
-/*    margin: 10px 5px;*/
-/*    !*background-color: var(--light);*!*/
-/*    position: relative;*/
-/*}*/
+.btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 45px;
+    max-height: 40px;
+    margin: 10px 5px;
+    background-color: var(--button);
+    position: relative;
+    color: var(--text-active);
+}
+
+.btn:is(:hover, :focus) {
+    background-color: var(--accent);
+}
 
 
 .label {

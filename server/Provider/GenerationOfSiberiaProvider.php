@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
+use HomeCalculator\Driver\Multiplier;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Logger\Log;
@@ -24,19 +25,40 @@ final class GenerationOfSiberiaProvider extends Provider
                 $keys[0],
                 'Электрическая энергия',
                 $this->storage->read($this->organizationName, $keys[0]),
-                'кВт/ч'
+                'кВт/ч',
+                [
+                    new Multiplier(
+                        'Электричество',
+                        'electricity',
+                        'кВт/ч'
+                    )
+                ]
             ),
             new Service(
                 $keys[1],
                 'Тепловая энергия',
                 $this->storage->read($this->organizationName, $keys[1]),
-                'Гкал'
+                'Гкал',
+                [
+                    new Multiplier(
+                        'Количество',
+                        'warm',
+                        'Гкал'
+                    )
+                ]
             ),
             new Service(
                 $keys[2],
                 'Горячая вода',
                 $this->storage->read($this->organizationName, $keys[2]),
-                "За метр кубический"
+                "За метр кубический",
+                [
+                    new Multiplier(
+                        'Объем',
+                        'hot-water',
+                        'м.куб'
+                    )
+                ]
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);

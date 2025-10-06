@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
+use HomeCalculator\Driver\Multiplier;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Logger\Log;
@@ -14,7 +15,6 @@ final class AOSAHProvider extends Provider
 {
     public function __construct(string $url)
     {
-        $this->icon = '<i class="fa fa-trash-o" aria-hidden="true"></i>';
         $this->organizationName = 'АО "САХ"';
         $this->url = $url;
         $this->storage = Storage::getInstance();
@@ -25,7 +25,14 @@ final class AOSAHProvider extends Provider
                 $keys[0],
                 'Обращение с ТКО',
                 $this->storage->read($this->organizationName, $keys[0]),
-                'с одного человека'
+                'чел',
+                [
+                    new Multiplier(
+                        'Человек в квартире',
+                        'humans-in-house',
+                        'чел'
+                    )
+                ]
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);

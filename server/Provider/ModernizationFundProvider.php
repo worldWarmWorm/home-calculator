@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
+use HomeCalculator\Driver\Multiplier;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Logger\Log;
@@ -24,7 +25,14 @@ final class ModernizationFundProvider extends Provider
                 $keys[0],
                 'Взнос за капитальный ремонт',
                 $this->storage->read($this->organizationName, $keys[0]),
-                'за 1 кв.м площади квартиры'
+                'за 1 кв.м площади квартиры',
+                [
+                    new Multiplier(
+                        'Площадь квартиры',
+                        'square-of-house',
+                        'кв.м'
+                    )
+                ]
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);

@@ -35,9 +35,13 @@ aside {
 }
 
 .providers .provider {
-    border: 1px dashed var(--placeholder);
+    border: 2px dashed var(--placeholder);
     border-radius: 15px;
     padding: 15px 23px;
+}
+
+.providers .provider:not(:last-child) {
+    margin-bottom: 30px;
 }
 
 .logo {
@@ -103,14 +107,13 @@ aside {
 
 .inputs .providers .organization {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
 }
 
 .inputs .providers .organization .name {
-    flex-grow: 1;
-    padding: 0 15px;
+    padding-right: 15px;
     font-size: 1.2em;
     line-height: 1.2em;
     font-weight: 500;
@@ -129,13 +132,21 @@ aside {
     font-weight: 700;
 }
 
-.inputs .providers .organization .icon i:before {
-    font-size: 1.4em;
-    line-height: 1.4em;
+.inputs .providers .provider > a {
+    color: var(--text);
 }
 
-.inputs .providers .provider > a {
+.inputs .providers .provider > a i {
+    padding-right: 10px;
+}
+
+.inputs .providers .provider > a:is(:hover, :focus) {
     color: var(--button);
 }
 
-
+.buttons {
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

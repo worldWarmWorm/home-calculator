@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
+use HomeCalculator\Driver\Multiplier;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Logger\Log;
@@ -24,13 +25,27 @@ final class GorvodokanalProvider extends Provider
                 $keys[0],
                 'Холодная вода',
                 $this->storage->read($this->organizationName, $keys[0]),
-                "За метр кубический"
+                "За метр кубический",
+                [
+                    new Multiplier(
+                        'Объем',
+                        'cold-water',
+                        'м.куб'
+                    )
+                ]
             ),
             new Service(
                 $keys[1],
                 'Водоотведение',
                 $this->storage->read($this->organizationName, $keys[1]),
-                "За метр кубический"
+                "За метр кубический",
+                [
+                    new Multiplier(
+                        'Объем',
+                        'water-aside',
+                        'м.куб'
+                    )
+                ]
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);

@@ -6,11 +6,15 @@ namespace HomeCalculator\Driver;
 
 final readonly class Service
 {
+    /**
+     * @param list<Multiplier> $multipliers
+     */
     public function __construct(
         private string $key,
         private string $name,
         private ?float  $tax,
-        private string $unit
+        private string $unit,
+        private array $multipliers
     ) {
     }
     public function getKey(): string
@@ -31,5 +35,13 @@ final readonly class Service
     public function getUnit(): string
     {
         return $this->unit;
+    }
+
+    /**
+     * @return list<Multiplier>
+     */
+    public function getMultipliers(): array
+    {
+        return $this->multipliers;
     }
 }

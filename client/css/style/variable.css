@@ -18,6 +18,7 @@
     /*CALCULATOR*/
     /*background-colors*/
     --input: #c5e6ed;
+    --static-input: #eee;
     --calc: #f0f5f5;
     --button: #5db7cd;
 
@@ -29,9 +30,8 @@
     --accent: #1bbf83;
 
     /*shadows*/
-    --input-active: 0 0 1px #282828;
-    --input-inactive: 0 0 1px #b6dfea;
-    --button-clear: 0 0 1px #5db7cd;
+    --input-active: 0 0 0 2px #282828;
+    --input-inactive: 0 0 0 2px #b6dfea;
 
     /*===============================*/
 

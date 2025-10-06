@@ -16,8 +16,6 @@ use Monolog\Level;
 
 abstract class Provider implements ProviderInterface
 {
-    protected string $icon;
-
     protected string $organizationName;
 
     protected string $url;
@@ -34,18 +32,13 @@ abstract class Provider implements ProviderInterface
         return $this->url;
     }
 
-    public function getIcon(): string
-    {
-        return $this->icon;
-    }
-
     public function getOrganizationName(): string
     {
         return $this->organizationName;
     }
 
     /**
-     * @return array<Service>
+     * @return list<Service>
      */
     public function getServices(): array
     {

@@ -26,16 +26,7 @@ aside {
     border-top-left-radius: 45px;
     margin-top: 45px;
     color: var(--text);
-}
-
-.calculator .tab-wrapper {
-    position: relative;
-}
-
-.calculator .tab-wrapper .tab-content {
-    position: absolute;
-    top: 0;
-    left: 0;
+    height: calc(100% - 45px);
 }
 
 .summary {

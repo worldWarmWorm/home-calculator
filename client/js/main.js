@@ -23,10 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
         let target = event.target;
         if (target && target.classList.contains('item')) {
             for(let i = 0; i < item.length; i++) {
+                item[i].classList.remove('active')
                 if (target == item[i]) {
                     hideTabContent(0);
                     showTabContent(i);
-                    break;
+                    target.classList.add('active');
                 }
             }
         }

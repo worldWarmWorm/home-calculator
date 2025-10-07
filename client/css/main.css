@@ -5,12 +5,14 @@
 
 .body {
     background-color: #fff;
+    padding: 15px;
 }
 
 .app {
     background-color: var(--back);
     border-radius: 45px;
     height: 100%;
+    width: 100%;
 }
 
 aside, main {
@@ -148,4 +150,8 @@ aside {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.tab-content {
+    min-height: calc(100vh - 135px);
 }

@@ -49,21 +49,21 @@ $app = App::init([
             <div class="col col-9">
                 <main class="calculator">
                     <div class="tab-wrapper">
-                        <div class="row tab-content show">
+                        <div class="row tab-content">
                             <div class="col col-7">
                                 <form action="#" class="inputs">
                                     <blockquote>Тарифы поставщиков услуг взяты с их официальных публичных сайтов</blockquote>
                                     <h3>Заполните поля для расчета</h3>
                                     <ul class="providers">
                                         <?php foreach ($app->getProviders() as $providerKey => $provider) { ?>
-                                            <li class="provider provider-<?= $providerKey ?>">
+                                        <li class="provider provider-<?= $providerKey ?>">
                                                 <h4 class="organization">
                                                     <span class="name"><?= $provider->getOrganizationName() ?></span>
                                                     <span class="number"><?= $providerKey + 1 ?></span>
                                                 </h4>
                                                 <ul class="services">
                                                     <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
-                                                        <li class="service service-<?= $serviceKey ?>">
+                                                    <li class="service service-<?= $serviceKey ?>">
                                                             <label class="label">
                                                                 <?= $service->getName() ?> (₽/<?= $service->getUnit() ?>)
                                                                 <input name="<?= $service->getKey() ?>" type="text" readonly value="<?= $service->getTax() ?>">

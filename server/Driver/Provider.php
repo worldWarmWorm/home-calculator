@@ -38,7 +38,7 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @return array<Service>
+     * @return list<Service>
      */
     public function getServices(): array
     {

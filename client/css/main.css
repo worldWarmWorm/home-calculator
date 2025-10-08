@@ -1,0 +1,156 @@
+@import "style/font.css";
+@import "style/common.css";
+@import "style/grid.css";
+@import "style/adaptive.css";
+
+.body {
+    background-color: #fff;
+    padding: 15px;
+}
+
+.app {
+    background-color: var(--back);
+    border-radius: 45px;
+    height: 100%;
+}
+
+aside, main {
+    padding: 30px;
+}
+
+aside {
+    color: var(--text-inactive);
+}
+
+.calculator {
+    background-color: var(--calc);
+    border-top-left-radius: 45px;
+    margin-top: 45px;
+    color: var(--text);
+    height: calc(100% - 45px);
+}
+
+.summary {
+    background-color: var(--summary);
+    color: var(--summary-text);
+    border-radius: 23px;
+    padding: 30px;
+}
+
+.providers .provider {
+    border: 2px dashed var(--placeholder);
+    border-radius: 15px;
+    padding: 15px 23px;
+}
+
+.providers .provider:not(:last-child) {
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo i {
+    margin: 20px 20px 30px 30px;
+}
+
+.logo i::before {
+    font-size: 4em;
+    line-height: 4rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+.logo span {
+    font-size: 1.4em;
+    line-height: 1.4em;
+    text-align: center;
+    font-weight: 700;
+}
+
+.item {
+    padding: 15px;
+    display: block;
+    color: var(--text-inactive);
+    border-radius: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.item:active {
+    background-color: var(--item-active);
+}
+
+.item.active {
+    background-color: var(--item-active);
+    color: var(--text-active);
+}
+
+.inputs blockquote {
+    padding: 15px;
+    background-color: var(--accent);
+    border-radius: 15px;
+    color: var(--text-inactive);
+}
+
+.inputs > h3 {
+    margin: 30px 0 15px;
+    font-size: 1.2em;
+    font-weight: 500;
+    line-height: 1.2em;
+}
+
+.inputs .providers .organization {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.inputs .providers .organization .name {
+    padding-right: 15px;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    font-weight: 500;
+}
+
+.inputs .providers .organization .number {
+    background-color: var(--button);
+    color: var(--text-inactive);
+    padding: 8px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 1em;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.inputs .providers .provider > a {
+    color: var(--text);
+}
+
+.inputs .providers .provider > a i {
+    padding-right: 10px;
+}
+
+.inputs .providers .provider > a:is(:hover, :focus) {
+    color: var(--button);
+}
+
+.buttons {
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-content {
+    min-height: calc(100vh - 135px);
+}

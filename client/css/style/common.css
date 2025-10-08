@@ -1,0 +1,115 @@
+@import "variable.css";
+
+*, *:after, *:before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+body {
+    max-width: 1440px;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    font-family: 'Poppins', system-ui, sans-serif;
+    padding: 15px;
+}
+
+a, input, button, textarea {
+    transition: all 0.3s;
+    border-radius: 10px;
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+input, textarea {
+    padding: 15px;
+    border: none;
+    background-color: var(--input);
+    box-shadow: inset var(--input-inactive);
+    width: 100%;
+}
+
+:is(input, textarea):focus {
+    box-shadow: inset var(--input-active);
+}
+
+input[readonly] {
+    cursor: default;
+    background-color: var(--static-input);
+    box-shadow: none !important;
+}
+
+textarea {
+    resize: none;
+}
+
+::placeholder {
+    color: var(--button);
+}
+
+ul, ol {
+    marks: none;
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    /*background: var(--light);*/
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    /*background: var(--accent);*/
+    outline: none;
+    border-radius: 5px;
+}
+
+.header, .main, .footer{
+    margin: 3em 0;
+}
+
+.btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 45px;
+    max-height: 40px;
+    margin: 10px 5px;
+    background-color: var(--button);
+    position: relative;
+    color: var(--text-active);
+}
+
+.btn:is(:hover, :focus) {
+    background-color: var(--accent);
+}
+
+.label {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.hide {
+    display: none !important;
+}

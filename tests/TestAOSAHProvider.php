@@ -16,7 +16,7 @@ final class TestAOSAHProvider extends TestCase
         $service = $provider->getServiceByKey($provider->generateServiceKey('1'));
         self::assertEquals('Обращение с ТКО', $service->getName());
         self::assertEquals('91.52', $service->getTax());
-        self::assertEquals('с одного человека, прописанного в квартире', $service->getUnit());
+        self::assertEquals('чел', $service->getUnit());
 
         return $provider;
     }

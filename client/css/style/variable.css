@@ -1,0 +1,44 @@
+:root {
+    /*COMMON*/
+    --back: #719091;
+    --radius: 12,5px;
+
+    /*===============================*/
+
+    /*ASIDE*/
+    /*background-colors*/
+    --item-active: #5e8281;
+
+    /*text-colors*/
+    --text-active: #fff;
+    --text-inactive: #edf5f0;
+
+    /*===============================*/
+
+    /*CALCULATOR*/
+    /*background-colors*/
+    --input: #c5e6ed;
+    --static-input: #eee;
+    --calc: #f0f5f5;
+    --button: #5db7cd;
+
+    /*text-colors*/
+    --placeholder: #b6dfea;
+    --text: #282828;
+    --button-clear-text: #5db7cd;
+    --button-calc-text: #fff;
+    --accent: #1bbf83;
+
+    /*shadows*/
+    --input-active: 0 0 0 2px #282828;
+    --input-inactive: 0 0 0 2px #b6dfea;
+
+    /*===============================*/
+
+    /*SUMMARY*/
+    /*background-colors*/
+    --summary: #fff;
+
+    /*text-colors*/
+    --summary-text: #5db7cd;
+}

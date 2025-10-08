@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
+use HomeCalculator\Driver\Multiplier;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Logger\Log;
 use HomeCalculator\Storage\Storage;
 use Monolog\Level;
 
-class GenerationOfSiberiaProvider extends Provider
+final class ModernizationFundProvider extends Provider
 {
     public function __construct(string $url)
     {
-        $this->organizationName = 'ООО "Генерация Сибири"';
+        $this->organizationName = 'Фонд модернизации ЖКХ';
         $this->url = $url;
         $this->storage = Storage::getInstance();
         $this->actualizeServicesTaxes();
@@ -22,9 +23,16 @@ class GenerationOfSiberiaProvider extends Provider
         $this->services = [
             new Service(
                 $keys[0],
-                'Электрическая энергия',
+                'Взнос за капитальный ремонт',
                 $this->storage->read($this->organizationName, $keys[0]),
-                'кВт/ч'
+                'за 1 кв.м площади квартиры',
+                [
+                    new Multiplier(
+                        'Площадь квартиры',
+                        'square-of-house',
+                        'кв.м'
+                    )
+                ]
             )
         ];
         Log::create(self::class . ' constructor called', Level::Info);
@@ -33,7 +41,7 @@ class GenerationOfSiberiaProvider extends Provider
     public function getKeySelectorPairs(): array
     {
         return [
-            $this->generateServiceKey('1') => '#eael-advance-tabs-05e5405 > div.eael-tabs-content div:nth-child(2) > table > tbody > tr:nth-child(5) > td:nth-child(2)',
+            $this->generateServiceKey('1') => 'body > div.wrap.container-fluid > div > main > section > div.col-lg-8 > div.row > div.col-xs-9 > ul:nth-child(3) > li:nth-child(3)',
         ];
     }
 }

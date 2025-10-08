@@ -103,8 +103,8 @@ $app = App::init([
                                 </form>
                             </div>
                             <div class="col col-5">
-                                <div id="summary" class="summary">
-                                    summary
+                                <div class="summary">
+                                    <h3>Итого: <span id="result"></span></h3>
                                 </div>
                             </div>
                         </div>
@@ -124,6 +124,6 @@ $app = App::init([
         </div>
     </div>
 
-    <script type="module" src="./client/js/main.js" defer></script>
+    <script type="module" src="./client/js/main.js"></script>
 </body>
 </html>

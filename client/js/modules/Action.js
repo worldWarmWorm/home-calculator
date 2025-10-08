@@ -5,7 +5,7 @@ class Action {
         if (this.constructor === Action) {
             throw new Error("Abstract classes can't be instantiated.");
         }
-        this.el = new Elemental();
+        this.element = new Elemental().getByKeys(["item", "tabSwitcher", "tabContent"]);
         Object.freeze(this)
     }
 }

@@ -97,7 +97,7 @@ $app = App::init([
                                         <?php } ?>
                                     </ul>
                                     <div class="buttons">
-                                        <button id="btn-calc" type="submit" class="btn btn-calc">Посчитать</button>
+                                        <button id="btn-calc" type="button" class="btn btn-calc">Посчитать</button>
                                         <button type="reset" class="btn btn-clear">Очистить</button>
                                     </div>
                                 </form>

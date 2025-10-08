@@ -17,7 +17,7 @@ class ActionSwitchTab extends Action {
         }
     }
 
-    switchTab() {
+    init() {
         this.el.tabSwitcher.addEventListener('click', (event) => {
             let target = event.target;
             if (target && target.classList.contains(ActionSwitchTab.ITEM)) {

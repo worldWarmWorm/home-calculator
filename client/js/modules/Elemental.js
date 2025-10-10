@@ -1,10 +1,12 @@
-class Elemental {
+export class Elemental {
     getRegisteredElements() {
         return {
-            item: document.querySelectorAll(".item"),
-            tabSwitcher: document.querySelector(".tab-switcher"),
-            tabContent: document.querySelectorAll(".tab-content"),
-            provider: document.querySelectorAll(".provider")
+            item: document.querySelectorAll('.item'),
+            tabSwitcher: document.querySelector('.tab-switcher'),
+            tabContent: document.querySelectorAll('.tab-content'),
+            provider: document.querySelectorAll('.provider'),
+            btnCalc: document.getElementById('btn-calc'),
+            result: document.getElementById('result')
         }
     }
 
@@ -14,5 +16,3 @@ class Elemental {
         );
     }
 }
-
-export {Elemental};

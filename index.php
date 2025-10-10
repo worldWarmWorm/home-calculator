@@ -10,10 +10,10 @@ use HomeCalculator\Provider\ModernizationFundProvider;
 require_once "vendor/autoload.php";
 
 $app = App::init([
-    new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
-    new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
-    new GenerationOfSiberiaProvider('https://gensib54.ru/'),
-    new GorvodokanalProvider('https://www.gorvodokanal.com/abonents/tariffs/'),
+//    new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
+//    new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
+//    new GenerationOfSiberiaProvider('https://gensib54.ru/'),
+//    new GorvodokanalProvider('https://www.gorvodokanal.com/abonents/tariffs/'),
 //    new GorskyProvider(''),
 ]);
 ?>
@@ -47,53 +47,53 @@ $app = App::init([
                 </aside>
             </div>
             <div class="col col-9">
-                <main class="calculator">
+                <main class="main">
                     <div class="tab-wrapper">
-                        <div class="row tab-content">
+                        <div class="row calculator tab-content hide">
                             <div class="col col-7">
-                                <form action="#" class="inputs">
+                                <form action="#" class="form">
                                     <blockquote>Тарифы поставщиков услуг взяты с их официальных публичных сайтов</blockquote>
-                                    <h3>Заполните поля для расчета</h3>
+                                    <h3 class="title">Заполните поля для расчета</h3>
                                     <ul class="providers">
                                         <?php foreach ($app->getProviders() as $providerKey => $provider) { ?>
                                         <li class="provider provider-<?= $providerKey ?>">
-                                                <h4 class="organization">
-                                                    <span class="name"><?= $provider->getOrganizationName() ?></span>
-                                                    <span class="number"><?= $providerKey + 1 ?></span>
-                                                </h4>
-                                                <ul class="services">
-                                                    <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
-                                                    <li class="service service-<?= $serviceKey ?>">
-                                                            <label class="label">
-                                                                <?= $service->getName() ?> (₽/<?= $service->getUnit() ?>)
-                                                                <input name="<?= $service->getKey() ?>" type="text" readonly value="<?= $service->getTax() ?>">
+                                            <h4 class="organization">
+                                                <span class="name"><?= $provider->getOrganizationName() ?></span>
+                                                <span class="number"><?= $providerKey + 1 ?></span>
+                                            </h4>
+                                            <ul class="services">
+                                                <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
+                                                <li class="service service-<?= $serviceKey ?>">
+                                                        <label class="label">
+                                                            <?= $service->getName() ?> (₽/<?= $service->getUnit() ?>)
+                                                            <input name="<?= $service->getKey() ?>" type="text" readonly value="<?= $service->getTax() ?>">
+                                                        </label>
+                                                        <?php foreach ($service->getMultipliers() as $multiplierKey => $multiplier) { ?>
+                                                            <label for="<?= $service->getKey() ?>-<?= $multiplierKey ?>" class="label">
+                                                                <?= $multiplier->getLabel() ?> (<?= $multiplier->getMeasure() ?>)
+                                                                <input
+                                                                        id="<?= $service->getKey() ?>-<?= $multiplierKey ?>"
+                                                                        name="<?= $multiplier->getName() ?>"
+                                                                        type="number"
+                                                                        value=""
+                                                                        placeholder="Ввод..."
+                                                                        required
+                                                                        oninvalid="this.setCustomValidity('Пропустили обязательное поле для ввода')"
+                                                                        oninput="this.setCustomValidity('')"
+                                                                        min="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
+                                                                        max="1000"
+                                                                        step="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
+                                                                >
                                                             </label>
-                                                            <?php foreach ($service->getMultipliers() as $multiplierKey => $multiplier) { ?>
-                                                                <label for="<?= $service->getKey() ?>-<?= $multiplierKey ?>" class="label">
-                                                                    <?= $multiplier->getLabel() ?> (<?= $multiplier->getMeasure() ?>)
-                                                                    <input
-                                                                            id="<?= $service->getKey() ?>-<?= $multiplierKey ?>"
-                                                                            name="<?= $multiplier->getName() ?>"
-                                                                            type="number"
-                                                                            value=""
-                                                                            placeholder="Ввод..."
-                                                                            required
-                                                                            oninvalid="this.setCustomValidity('Пропустили обязательное поле для ввода')"
-                                                                            oninput="this.setCustomValidity('')"
-                                                                            min="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
-                                                                            max="1000"
-                                                                            step="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
-                                                                    >
-                                                                </label>
-                                                            <?php } ?>
-                                                        </li>
-                                                    <?php } ?>
-                                                </ul>
-                                                <a href="<?= $provider->getUrl() ?>" target="_blank">
-                                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                                                    На страницу тарифов
-                                                </a>
-                                            </li>
+                                                        <?php } ?>
+                                                    </li>
+                                                <?php } ?>
+                                            </ul>
+                                            <a href="<?= $provider->getUrl() ?>" target="_blank">
+                                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                На страницу тарифов
+                                            </a>
+                                        </li>
                                         <?php } ?>
                                     </ul>
                                     <div class="buttons">
@@ -108,14 +108,20 @@ $app = App::init([
                                 </div>
                             </div>
                         </div>
-                        <div class="row tab-content hide">
+                        <div class="row requests tab-content">
                             <div class="col col-12">
-                                add provider
+                                <form action="#" class="form">
+                                    <h3 class="title">Активные заявки на добавление поставщиков услуг</h3>
+                                    <label class="label">
+                                        Название поля
+                                        <input name="field" type="text" value="" placeholder="Ввод...">
+                                    </label>
+                                </form>
                             </div>
                         </div>
-                        <div class="row tab-content hide">
+                        <div class="row claims tab-content hide">
                             <div class="col col-12">
-                                incorrect taxes
+                                <h3 class="title">Напишите сообщение</h3>
                             </div>
                         </div>
                     </div>

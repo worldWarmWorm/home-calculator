@@ -22,7 +22,7 @@ aside {
     color: var(--text-inactive);
 }
 
-.calculator {
+main.main {
     background-color: var(--calc);
     border-top-left-radius: 45px;
     margin-top: 45px;
@@ -91,35 +91,36 @@ aside {
     color: var(--text-active);
 }
 
-.inputs blockquote {
+.form blockquote {
     padding: 15px;
     background-color: var(--accent);
     border-radius: 15px;
     color: var(--text-inactive);
+    margin-bottom: 15px;
 }
 
-.inputs > h3 {
-    margin: 30px 0 15px;
+h3.title {
+    margin: 15px 0;
     font-size: 1.2em;
     font-weight: 500;
     line-height: 1.2em;
 }
 
-.inputs .providers .organization {
+.form .providers .organization {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
 }
 
-.inputs .providers .organization .name {
+.form .providers .organization .name {
     padding-right: 15px;
     font-size: 1.2em;
     line-height: 1.2em;
     font-weight: 500;
 }
 
-.inputs .providers .organization .number {
+.form .providers .organization .number {
     background-color: var(--button);
     color: var(--text-inactive);
     padding: 8px;
@@ -132,15 +133,15 @@ aside {
     font-weight: 700;
 }
 
-.inputs .providers .provider > a {
+.form .providers .provider > a {
     color: var(--text);
 }
 
-.inputs .providers .provider > a i {
+.form .providers .provider > a i {
     padding-right: 10px;
 }
 
-.inputs .providers .provider > a:is(:hover, :focus) {
+.form .providers .provider > a:is(:hover, :focus) {
     color: var(--button);
 }
 

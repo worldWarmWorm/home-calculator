@@ -109,19 +109,88 @@ $app = App::init([
                             </div>
                         </div>
                         <div class="row requests tab-content">
-                            <div class="col col-12">
+                            <div class="col col-7">
                                 <form action="#" class="form">
                                     <h3 class="title">Активные заявки на добавление поставщиков услуг</h3>
                                     <label class="label">
-                                        Название поля
-                                        <input name="field" type="text" value="" placeholder="Ввод...">
+                                        Ваше имя
+                                        <input name="user-name" type="text" value="" placeholder="Ввод..." required>
                                     </label>
+                                    <label class="label">
+                                        Телефон для связи
+                                        <input name="user-phone" type="tel" pattern="^(+7)[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="+70001112233" required>
+                                    </label>
+                                    <label class="label">
+                                        Ссылка на официальные сайт поставщика услуг
+                                        <input name="field-site" type="url" placeholder="Ввод..." required>
+                                    </label>
+                                    <div class="buttons">
+                                        <button id="btn-send-claim" type="submit" class="btn btn-send-calc">Создать заявку</button>
+                                        <button type="reset" class="btn btn-clear">Очистить</button>
+                                    </div>
                                 </form>
+                            </div>
+                            <div class="col col-5">
+                                <div class="summary">
+                                    <h3>Итого: <span id="result">0</span> ₽</h3>
+                                </div>
                             </div>
                         </div>
                         <div class="row claims tab-content hide">
-                            <div class="col col-12">
-                                <h3 class="title">Напишите сообщение</h3>
+                            <div class="col col-7">
+                                <form action="#" class="form">
+                                    <h3 class="title">Выберите неактуальные тарифы и прикрепите ссылку на актуальные</h3>
+                                    <ul class="providers">
+                                        <?php foreach ($app->getProviders() as $providerKey => $provider) { ?>
+                                            <li class="provider provider-<?= $providerKey ?>">
+                                                <h4 class="organization">
+                                                    <span class="name"><?= $provider->getOrganizationName() ?></span>
+                                                </h4>
+                                                <ul class="services">
+                                                    <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
+                                                        <li class="service service-<?= $serviceKey ?>">
+                                                            <label class="label">
+                                                                <input name="<?= $service->getKey() ?>" type="checkbox">
+                                                                <?= $service->getName() ?>
+                                                            </label>
+                                                            <?php foreach ($service->getMultipliers() as $multiplierKey => $multiplier) { ?>
+                                                                <label for="<?= $service->getKey() ?>-<?= $multiplierKey ?>" class="label">
+                                                                    <?= $multiplier->getLabel() ?> (<?= $multiplier->getMeasure() ?>)
+                                                                    <input
+                                                                        id="<?= $service->getKey() ?>-<?= $multiplierKey ?>"
+                                                                        name="<?= $multiplier->getName() ?>"
+                                                                        type="number"
+                                                                        value=""
+                                                                        placeholder="Ввод..."
+                                                                        required
+                                                                        oninvalid="this.setCustomValidity('Пропустили обязательное поле для ввода')"
+                                                                        oninput="this.setCustomValidity('')"
+                                                                        min="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
+                                                                        max="1000"
+                                                                        step="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
+                                                                    >
+                                                                </label>
+                                                            <?php } ?>
+                                                        </li>
+                                                    <?php } ?>
+                                                </ul>
+                                                <a href="<?= $provider->getUrl() ?>" target="_blank">
+                                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                    На страницу тарифов
+                                                </a>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                    <div class="buttons">
+                                        <button id="btn-notify" type="submit" class="btn btn-notify">Сообщить</button>
+                                        <button type="reset" class="btn btn-clear">Очистить</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col col-5">
+                                <div class="summary">
+                                    <h3>Итого: <span id="result">0</span> ₽</h3>
+                                </div>
                             </div>
                         </div>
                     </div>

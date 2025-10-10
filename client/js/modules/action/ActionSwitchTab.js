@@ -1,5 +1,5 @@
 import {Action} from "./Action.js";
-import {Elemental} from "./Elemental.js";
+import {Elemental} from "../Elemental.js";
 
 export class ActionSwitchTab extends Action {
     static HIDE = 'hide'

@@ -1,7 +1,10 @@
 import {Action} from "./Action.js";
-import {Elemental} from "./Elemental.js";
+import {Elemental} from "../Elemental.js";
 
 export class ActionCalculate extends Action {
+    static TAX_INPUT = 'input[type="text"][readonly]';
+    static MULTIPLIERS = 'input[type="number"]';
+
     constructor() {
         super();
         this.element = new Elemental().getByKeys(['btnCalc', 'provider', 'result']);
@@ -16,9 +19,9 @@ export class ActionCalculate extends Action {
                 let providerSum = 0;
 
                 provider.querySelectorAll('.service').forEach((service) => {
-                    const taxInput = service.querySelector('input[type="text"][readonly]');
+                    const taxInput = service.querySelector(ActionCalculate.TAX_INPUT);
                     const tax = taxInput ? parseFloat(taxInput.value) : 0;
-                    const multipliers = service.querySelectorAll('input[type="number"]');
+                    const multipliers = service.querySelectorAll(ActionCalculate.MULTIPLIERS);
 
                     let multiplierProduct = 1;
                     for (const input of multipliers) {

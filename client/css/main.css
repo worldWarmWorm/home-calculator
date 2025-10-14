@@ -37,6 +37,11 @@ main.main {
     padding: 30px;
 }
 
+.summary h3 {
+    font-weight: 500;
+    padding-bottom: 15px;
+}
+
 .providers .provider {
     border: 2px dashed var(--placeholder);
     border-radius: 15px;

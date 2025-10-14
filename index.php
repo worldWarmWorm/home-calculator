@@ -41,7 +41,8 @@ $app = App::init([
                         <ul class="tab-switcher">
                             <li class="item active">Калькулятор</li>
                             <li class="item">Добавить поставщика услуг</li>
-                            <li class="item">Сообщить о неактуальности тарифа</li>
+<!--                            <li class="item">Написать поставщику услуг</li>-->
+                            <li class="item">Полезные ссылки</li>
                         </ul>
                     </nav>
                 </aside>
@@ -111,18 +112,14 @@ $app = App::init([
                         <div class="row requests tab-content">
                             <div class="col col-7">
                                 <form action="#" class="form">
-                                    <h3 class="title">Активные заявки на добавление поставщиков услуг</h3>
-                                    <label class="label">
-                                        Ваше имя
-                                        <input name="user-name" type="text" value="" placeholder="Ввод..." required>
-                                    </label>
-                                    <label class="label">
-                                        Телефон для связи
-                                        <input name="user-phone" type="tel" pattern="^(+7)[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="+70001112233" required>
-                                    </label>
+                                    <h3 class="title">Подача заявки на добавление поставщика услуг</h3>
                                     <label class="label">
                                         Ссылка на официальные сайт поставщика услуг
                                         <input name="field-site" type="url" placeholder="Ввод..." required>
+                                    </label>
+                                    <label class="label">
+                                        Сообщение
+                                        <textarea name="additional-message" id="additional-message" cols="30" rows="10" placeholder="Ввод..."></textarea>
                                     </label>
                                     <div class="buttons">
                                         <button id="btn-send-claim" type="submit" class="btn btn-send-calc">Создать заявку</button>
@@ -132,65 +129,43 @@ $app = App::init([
                             </div>
                             <div class="col col-5">
                                 <div class="summary">
-                                    <h3>Итого: <span id="result">0</span> ₽</h3>
+                                    <h3>Срок выполнения одной заявки - до недели.</h3>
+                                    <p>Создатель калькулятора работает один по личной инициативе в
+                                    свободное от основной работы и семейных хлопот время.</p>
                                 </div>
                             </div>
                         </div>
+<!--                        <div class="row message-to-provider tab-content hide">-->
+<!--                            <div class="col col-7">-->
+<!--                                <form action="#" class="form">-->
+<!--                                    <h3 class="title">Выберите подходящий шаблон или составьте письмо самостоятельно</h3>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                            <div class="col col-5">-->
+<!--                                <div class="summary">-->
+<!--                                    Все сообщения отправляются на официальные электронные почты поставщиков услуг-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="row claims tab-content hide">
-                            <div class="col col-7">
-                                <form action="#" class="form">
-                                    <h3 class="title">Выберите неактуальные тарифы и прикрепите ссылку на актуальные</h3>
-                                    <ul class="providers">
-                                        <?php foreach ($app->getProviders() as $providerKey => $provider) { ?>
-                                            <li class="provider provider-<?= $providerKey ?>">
-                                                <h4 class="organization">
-                                                    <span class="name"><?= $provider->getOrganizationName() ?></span>
-                                                </h4>
-                                                <ul class="services">
-                                                    <?php foreach ($provider->getServices() as $serviceKey => $service) { ?>
-                                                        <li class="service service-<?= $serviceKey ?>">
-                                                            <label class="label">
-                                                                <input name="<?= $service->getKey() ?>" type="checkbox">
-                                                                <?= $service->getName() ?>
-                                                            </label>
-                                                            <?php foreach ($service->getMultipliers() as $multiplierKey => $multiplier) { ?>
-                                                                <label for="<?= $service->getKey() ?>-<?= $multiplierKey ?>" class="label">
-                                                                    <?= $multiplier->getLabel() ?> (<?= $multiplier->getMeasure() ?>)
-                                                                    <input
-                                                                        id="<?= $service->getKey() ?>-<?= $multiplierKey ?>"
-                                                                        name="<?= $multiplier->getName() ?>"
-                                                                        type="number"
-                                                                        value=""
-                                                                        placeholder="Ввод..."
-                                                                        required
-                                                                        oninvalid="this.setCustomValidity('Пропустили обязательное поле для ввода')"
-                                                                        oninput="this.setCustomValidity('')"
-                                                                        min="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
-                                                                        max="1000"
-                                                                        step="<?= $multiplier->getMeasure() === 'чел' ? '1.0' : '0.1' ?>"
-                                                                    >
-                                                                </label>
-                                                            <?php } ?>
-                                                        </li>
-                                                    <?php } ?>
-                                                </ul>
-                                                <a href="<?= $provider->getUrl() ?>" target="_blank">
-                                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                                                    На страницу тарифов
-                                                </a>
-                                            </li>
-                                        <?php } ?>
+                            <div class="col col-12">
+                                <h3 class="title">Полезные ссылки для дома на Березовой 13</h3>
+                                <nav>
+                                    <ul>
+                                        <li>
+                                            <a href="https://t.me/home_calculator" target="_blank">
+                                                <i class="fa fa-telegram" aria-hidden="true"></i>
+                                                Чат калькулятора
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://web.whatsapp.com" target="_blank">
+                                                <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                                Домовой чат
+                                            </a>
+                                        </li>
                                     </ul>
-                                    <div class="buttons">
-                                        <button id="btn-notify" type="submit" class="btn btn-notify">Сообщить</button>
-                                        <button type="reset" class="btn btn-clear">Очистить</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col col-5">
-                                <div class="summary">
-                                    <h3>Итого: <span id="result">0</span> ₽</h3>
-                                </div>
+                                </nav>
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,8 @@ export class Elemental {
             tabContent: document.querySelectorAll('.tab-content'),
             provider: document.querySelectorAll('.provider'),
             btnCalc: document.getElementById('btn-calc'),
-            result: document.getElementById('result')
+            result: document.getElementById('result'),
+            btnSendRequest: document.getElementById('btn-send-request'),
         }
     }
 

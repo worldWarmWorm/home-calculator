@@ -115,14 +115,14 @@ $app = App::init([
                                     <h3 class="title">Подача заявки на добавление поставщика услуг</h3>
                                     <label class="label">
                                         Ссылка на официальные сайт поставщика услуг
-                                        <input name="field-site" type="url" placeholder="Ввод..." required>
+                                        <input name="field-site" id="field-site" type="url" placeholder="Ввод..." required>
                                     </label>
                                     <label class="label">
                                         Сообщение
                                         <textarea name="additional-message" id="additional-message" cols="30" rows="10" placeholder="Ввод..."></textarea>
                                     </label>
                                     <div class="buttons">
-                                        <button id="btn-send-claim" type="submit" class="btn btn-send-calc">Создать заявку</button>
+                                        <button id="btn-send-request" type="submit" class="btn btn-send-calc">Создать заявку</button>
                                         <button type="reset" class="btn btn-clear">Очистить</button>
                                     </div>
                                 </form>

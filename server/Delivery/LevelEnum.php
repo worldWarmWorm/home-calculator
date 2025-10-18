@@ -6,5 +6,5 @@ enum LevelEnum: string
 {
     case CRITICAL = 'critical';
     case NOTICE = 'notice';
-
+    case TASK = 'task';
 }

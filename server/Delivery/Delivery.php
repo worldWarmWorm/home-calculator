@@ -11,6 +11,7 @@ abstract class Delivery implements DeliveryInterface
     private const array LEVEL_PREFIXES = [
         LevelEnum::CRITICAL->value => "[CRITICAL]",
         LevelEnum::NOTICE->value => "[NOTICE]",
+        LevelEnum::TASK->value => "[TASK]",
     ];
 
     private const string DOT_ENV_PATH = __DIR__ . '/../../';

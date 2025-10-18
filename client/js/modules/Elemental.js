@@ -8,6 +8,7 @@ export class Elemental {
             btnCalc: document.getElementById('btn-calc'),
             result: document.getElementById('result'),
             btnSendRequest: document.getElementById('btn-send-request'),
+            formSendRequest: document.getElementById('send-request'),
         }
     }
 

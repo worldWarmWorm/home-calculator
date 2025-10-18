@@ -2,18 +2,20 @@ import {Action} from "./Action.js";
 import {Elemental} from "../Elemental.js";
 
 export class ActionSendRequest extends Action {
-
     constructor() {
         super();
-        this.element = new Elemental().getByKeys(['btnSendRequest']);
+        this.element = new Elemental().getByKeys(['formSendRequest']);
         Object.freeze(this)
     }
 
     init() {
-        this.element.btnSendRequest.addEventListener('click', (event) => {
+        const form = this.element.formSendRequest;
+
+        form.addEventListener('submit', (event) => {
             event.preventDefault();
-            this.clearInputs();
-            this.showToast('Запрос отправлен')
+            this.sendForm(form);
+            this.showToast()
+            this.clearInputs()
         });
     };
 
@@ -25,11 +27,11 @@ export class ActionSendRequest extends Action {
             position: 'fixed',
             bottom: '20px',
             right: '20px',
-            backgroundColor: 'rgba(0,0,0,0.8)',
+            backgroundColor: '#1bbf83',
             color: '#fff',
             padding: '12px 24px',
             borderRadius: '5px',
-            fontSize: '14px',
+            fontSize: '16px',
             zIndex: 10000,
             opacity: '1',
             transition: 'opacity 0.5s ease',
@@ -42,7 +44,6 @@ export class ActionSendRequest extends Action {
             toast.style.opacity = '0';
             setTimeout(() => {
                 toast.remove();
-                this.clearInputs();
             }, 500);
         }, 5000);
     }
@@ -60,5 +61,15 @@ export class ActionSendRequest extends Action {
                 }
             }
         });
+    }
+
+    sendForm(form) {
+        fetch('server/form/add_new_provider.php', {
+            method: 'POST',
+            body: new FormData(form)
+        })
+            .then(response => response.json())
+            .then(data => alert(data.status))
+            .catch(error => alert('Ошибка: ' + error));
     }
 }

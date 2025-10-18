@@ -111,7 +111,7 @@ $app = App::init([
                         </div>
                         <div class="row requests tab-content">
                             <div class="col col-7">
-                                <form action="#" class="form">
+                                <form id="send-request" class="form">
                                     <h3 class="title">Подача заявки на добавление поставщика услуг</h3>
                                     <label class="label">
                                         Ссылка на официальные сайт поставщика услуг
@@ -119,7 +119,7 @@ $app = App::init([
                                     </label>
                                     <label class="label">
                                         Сообщение
-                                        <textarea name="additional-message" id="additional-message" cols="30" rows="10" placeholder="Ввод..."></textarea>
+                                        <textarea name="additional-message" id="additional-message" cols="30" rows="10" maxlength="255" placeholder="Ввод..."></textarea>
                                     </label>
                                     <div class="buttons">
                                         <button id="btn-send-request" type="submit" class="btn btn-send-calc">Создать заявку</button>
@@ -149,19 +149,31 @@ $app = App::init([
 <!--                        </div>-->
                         <div class="row claims tab-content hide">
                             <div class="col col-12">
-                                <h3 class="title">Полезные ссылки для дома на Березовой 13</h3>
+                                <h3 class="title">Полезные ссылки</h3>
                                 <nav>
                                     <ul>
                                         <li>
                                             <a href="https://t.me/home_calculator" target="_blank">
                                                 <i class="fa fa-telegram" aria-hidden="true"></i>
-                                                Чат калькулятора
+                                                Чат калькулятора в telegram
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="https://web.whatsapp.com" target="_blank">
-                                                <i class="fa fa-whatsapp" aria-hidden="true"></i>
-                                                Домовой чат
+                                            <a href="https://portal.dom.gosuslugi.ru/home/5745c192-82df-4543-8225-6cdf86aa475b" target="_blank">
+                                                <i class="fa fa-home" aria-hidden="true"></i>
+                                                Информация о доме Березовая 13
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.consultant.ru/document/cons_doc_LAW_51057/" target="_blank">
+                                                <i class="fa fa-book" aria-hidden="true"></i>
+                                                Жилищный кодекс РФ
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://novo-sibirsk.ru/adm/pervom/" target="_blank">
+                                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                                                Сайт администрации Первомайского района г.Новосибирска
                                             </a>
                                         </li>
                                     </ul>

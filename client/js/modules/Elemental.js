@@ -7,8 +7,9 @@ export class Elemental {
             provider: document.querySelectorAll('.provider'),
             btnCalc: document.getElementById('btn-calc'),
             result: document.getElementById('result'),
-            btnSendRequest: document.getElementById('btn-send-request'),
             formSendRequest: document.getElementById('send-request'),
+            fieldSite: document.getElementById('field-site'),
+            additionalMessage: document.getElementById('additional-message'),
         }
     }
 

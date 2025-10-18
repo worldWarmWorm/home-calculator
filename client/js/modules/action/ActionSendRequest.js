@@ -1,75 +1,41 @@
 import {Action} from "./Action.js";
 import {Elemental} from "../Elemental.js";
+import {Toast} from "../content/Toast.js";
+import {Input} from "../content/Input.js";
 
 export class ActionSendRequest extends Action {
     constructor() {
         super();
-        this.element = new Elemental().getByKeys(['formSendRequest']);
+        this.element = new Elemental().getByKeys(['formSendRequest', 'fieldSite', 'additionalMessage']);
         Object.freeze(this)
     }
 
     init() {
         const form = this.element.formSendRequest;
-
         form.addEventListener('submit', (event) => {
             event.preventDefault();
-            this.sendForm(form);
-            this.showToast()
-            this.clearInputs()
+            this.addNewProvider(form);
         });
     };
 
-    showToast(message) {
-        const toast = document.createElement('div');
-        toast.innerText = message;
-
-        Object.assign(toast.style, {
-            position: 'fixed',
-            bottom: '20px',
-            right: '20px',
-            backgroundColor: '#1bbf83',
-            color: '#fff',
-            padding: '12px 24px',
-            borderRadius: '5px',
-            fontSize: '16px',
-            zIndex: 10000,
-            opacity: '1',
-            transition: 'opacity 0.5s ease',
-            pointerEvents: 'auto',
-        });
-
-        document.body.appendChild(toast);
-
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => {
-                toast.remove();
-            }, 500);
-        }, 5000);
-    }
-
-    clearInputs() {
-        const idsToClear = ['field-site', 'additional-message'];
-        idsToClear.forEach(id => {
-            const element = document.getElementById(id);
-            if (element) {
-                const tagName = element.tagName.toLowerCase();
-                if (tagName === 'input') {
-                    element.value = '';
-                } else if (tagName === 'textarea') {
-                    element.value = '';
-                }
+    addNewProvider(form) {
+        fetch(
+            'server/form/add_new_provider.php',
+            {
+                method: 'POST',
+                body: new FormData(form)
             }
-        });
-    }
-
-    sendForm(form) {
-        fetch('server/form/add_new_provider.php', {
-            method: 'POST',
-            body: new FormData(form)
-        })
+        )
             .then(response => response.json())
-            .then(data => alert(data.status))
-            .catch(error => alert('Ошибка: ' + error));
+            .then(data => {
+                if (data.success === false) {
+                    alert(data.message)
+                } else {
+                    new Toast('Заявка отправлена!').show()
+                    new Input([this.element.fieldSite, this.element.additionalMessage]).clear()
+                }
+                return data
+            })
+            .catch(error => console.error('Ошибка: ' + error));
     }
 }

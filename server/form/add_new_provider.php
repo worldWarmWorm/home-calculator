@@ -7,29 +7,29 @@ use Monolog\Level;
 
 require_once "../../vendor/autoload.php";
 
-$site = htmlspecialchars(trim($_POST['field-site'] ?? ''));
+$response = [
+    'success' => false,
+    'message' => '',
+];
 
-if ('' === $site || false === filter_var($site, FILTER_VALIDATE_URL)) {
-    $message = 'Field "field-site" must be valid URL';
-    Log::create($message, Level::Error);
-    throw new InvalidArgumentException($message);
-}
+try {
+    $site = htmlspecialchars(trim($_POST['field-site'] ?? ''));
+    $additionalMessage = htmlspecialchars(trim($_POST['additional-message'] ?? ''));
 
-$message = "Просьба добавить услуги поставщика: $site";
-$additionalMessage = htmlspecialchars(trim($_POST['additional-message'] ?? ''));
-
-if ('' !== $additionalMessage) {
-    $message .= "\n";
-
-    if (strlen($additionalMessage) > 255) {
-        Log::create(__FILE__ . ": reached limit of input data - 255 chars, tale was cut", Level::Debug);
-        $additionalMessage = substr($additionalMessage, 0, 255);
+    if ('' === $site || false === filter_var($site, FILTER_VALIDATE_URL)) {
+        throw new InvalidArgumentException('Поле "Ссылка на официальные сайт поставщика услуг" принимает url формат https://www.site.com');
     }
 
-    $message .= $additionalMessage;
+    if (strlen($additionalMessage) > 255) {
+        $message = 'Достигнут лимит текста поля "Сообщение" 255 символов';
+        Log::create($message, Level::Error);
+        throw new InvalidArgumentException($message);
+    }
+
+    (new Notification("Добавить услуги поставщика: $site" . ('' === $additionalMessage ? '' : "\n$additionalMessage"), LevelEnum::TASK->value))->send();
+    print_r(json_encode(['success' => true, 'message' => "Заявка на добавление поставщика $site успешно отправлена"], JSON_PRETTY_PRINT));
+} catch (Throwable $exception) {
+    Log::create($exception->getMessage(), Level::Error);
+    $response['message'] = $exception->getMessage();
+    print_r(json_encode($response, JSON_PRETTY_PRINT));
 }
-
-
-
-$notification = new Notification($message, LevelEnum::TASK->value);
-$notification->send();

@@ -1,10 +1,15 @@
-class Elemental {
+export class Elemental {
     getRegisteredElements() {
         return {
-            item: document.querySelectorAll(".item"),
-            tabSwitcher: document.querySelector(".tab-switcher"),
-            tabContent: document.querySelectorAll(".tab-content"),
-            provider: document.querySelectorAll(".provider")
+            item: document.querySelectorAll('.item'),
+            tabSwitcher: document.querySelector('.tab-switcher'),
+            tabContent: document.querySelectorAll('.tab-content'),
+            provider: document.querySelectorAll('.provider'),
+            btnCalc: document.getElementById('btn-calc'),
+            result: document.getElementById('result'),
+            formSendRequest: document.getElementById('send-request'),
+            fieldSite: document.getElementById('field-site'),
+            additionalMessage: document.getElementById('additional-message'),
         }
     }
 
@@ -14,5 +19,3 @@ class Elemental {
         );
     }
 }
-
-export {Elemental};

@@ -1,9 +1,16 @@
 import {Action} from "./Action.js";
+import {Elemental} from "../Elemental.js";
 
-class ActionSwitchTab extends Action {
+export class ActionSwitchTab extends Action {
     static HIDE = 'hide'
     static ITEM = 'item'
     static ACTIVE = 'active'
+
+    constructor() {
+        super();
+        this.element = new Elemental().getByKeys(["item", "tabSwitcher", "tabContent"]);
+        Object.freeze(this)
+    }
 
     hideContent(key) {
         for (let i = key; i < this.element.tabContent.length; i++) {
@@ -33,5 +40,3 @@ class ActionSwitchTab extends Action {
         });
     }
 }
-
-export {ActionSwitchTab};

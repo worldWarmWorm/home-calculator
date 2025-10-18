@@ -47,6 +47,8 @@ input[readonly] {
 
 textarea {
     resize: none;
+    height: 150px;
+    overflow-y: auto;
 }
 
 ::placeholder {
@@ -62,21 +64,6 @@ img {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
-}
-
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    /*background: var(--light);*/
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-    /*background: var(--accent);*/
-    outline: none;
-    border-radius: 5px;
 }
 
 .header, .main, .footer{

@@ -18,6 +18,8 @@ abstract class Provider implements ProviderInterface
 {
     protected string $organizationName;
 
+    protected string $organizationEmail;
+
     protected string $url;
 
     /**

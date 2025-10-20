@@ -163,7 +163,7 @@ abstract class Provider implements ProviderInterface
     {
         $storage = $this->getTaxStorage();
 
-        foreach ($serviceKeys as $serviceKey) {
+        foreach ($serviceKeys as $serviceKey => $htmlSelector) {
             $tax = $storage->read($organizationName, $serviceKey);
 
             if (null === $tax) {

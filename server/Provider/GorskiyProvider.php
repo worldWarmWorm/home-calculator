@@ -18,7 +18,7 @@ final class GorskiyProvider extends Provider
             new Service(
                 $this->serviceKeys[0],
                 'Текущее содержание',
-                (float)'32.23',
+                (float)'32.23', // @todo need parse
                 "За метр квадратный",
                 [
                     new FormInputMultiplier(
@@ -31,7 +31,7 @@ final class GorskiyProvider extends Provider
             new Service(
                 $this->serviceKeys[1],
                 'Текущий ремонт',
-                (float)'3',
+                (float)'3', // @todo need parse
                 "За метр квадратный",
                 [
                     new FormInputMultiplier(

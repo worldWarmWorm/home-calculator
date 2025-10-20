@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Core\Provider;
-use HomeCalculator\Core\Service;
-use HomeCalculator\DTO\FormInputMultiplier;
+use HomeCalculator\DTO\FormInputMultiplierDto;
+use HomeCalculator\DTO\ServiceDto;
+use HomeCalculator\Provider\Core\Provider;
 
 final class GorvodokanalProvider extends Provider
 {
@@ -15,31 +15,27 @@ final class GorvodokanalProvider extends Provider
         parent::__construct($url, 'Горводоканал', $isUnitTest);
 
         $this->services = [
-            new Service(
+            new ServiceDto(
                 $this->serviceKeys[0],
                 'Холодная вода',
                 $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[0]),
                 "За метр кубический",
-                [
-                    new FormInputMultiplier(
-                        'Объем',
-                        'cold-water',
-                        'м.куб'
-                    )
-                ]
+                new FormInputMultiplierDto(
+                    'Объем',
+                    'cold-water',
+                    'м.куб'
+                )
             ),
-            new Service(
+            new ServiceDto(
                 $this->serviceKeys[1],
                 'Водоотведение',
                 $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[1]),
                 "За метр кубический",
-                [
-                    new FormInputMultiplier(
-                        'Объем',
-                        'water-aside',
-                        'м.куб'
-                    )
-                ]
+                new FormInputMultiplierDto(
+                    'Объем',
+                    'water-aside',
+                    'м.куб'
+                )
             )
         ];
     }

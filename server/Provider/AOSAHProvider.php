@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Core\Provider;
-use HomeCalculator\Core\Service;
-use HomeCalculator\DTO\FormInputMultiplier;
+use HomeCalculator\DTO\FormInputMultiplierDto;
+use HomeCalculator\DTO\ServiceDto;
+use HomeCalculator\Provider\Core\Provider;
 
 final class AOSAHProvider extends Provider
 {
@@ -15,18 +15,16 @@ final class AOSAHProvider extends Provider
         parent::__construct($url, 'АО "САХ"', $isUnitTest);
 
         $this->services = [
-            new Service(
+            new ServiceDto(
                 $this->serviceKeys[0],
                 'Обращение с ТКО',
                 $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[0]),
                 'чел',
-                [
-                    new FormInputMultiplier(
-                        'Человек в квартире',
-                        'humans-in-house',
-                        'чел'
-                    )
-                ]
+                new FormInputMultiplierDto(
+                    'Человек в квартире',
+                    'humans-in-house',
+                    'чел'
+                )
             )
         ];
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace HomeCalculator\Storage;
+namespace HomeCalculator\Storage\Core;
 
 interface StorageInterface
 {

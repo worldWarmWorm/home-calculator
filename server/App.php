@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator;
 
-use HomeCalculator\Core\ProviderInterface;
+use HomeCalculator\Provider\Core\ProviderInterface;
 
 final class App
 {

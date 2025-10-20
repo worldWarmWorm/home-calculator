@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator\DTO;
 
-final readonly class FormInputMultiplier
+final readonly class FormInputMultiplierDto
 {
     public function __construct(
         private string $label,

@@ -1,6 +1,6 @@
 <?php
 
-namespace HomeCalculator\Core;
+namespace HomeCalculator\Provider\Core;
 
 enum TimezoneEnum: string
 {

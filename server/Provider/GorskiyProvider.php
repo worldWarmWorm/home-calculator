@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Core\Provider;
-use HomeCalculator\Core\Service;
-use HomeCalculator\DTO\FormInputMultiplier;
+use HomeCalculator\DTO\FormInputMultiplierDto;
+use HomeCalculator\DTO\ServiceDto;
+use HomeCalculator\Provider\Core\Provider;
 
 final class GorskiyProvider extends Provider
 {
@@ -15,31 +15,27 @@ final class GorskiyProvider extends Provider
         parent::__construct($url, 'ООО "КЖЭК Горский"', $isUnitTest);
 
         $this->services = [
-            new Service(
+            new ServiceDto(
                 $this->serviceKeys[0],
                 'Текущее содержание',
                 (float)'32.23', // @todo need parse
                 "За метр квадратный",
-                [
-                    new FormInputMultiplier(
-                        'Площадь квартиры',
-                        'current-maintenance',
-                        'кв.м'
-                    )
-                ]
+                new FormInputMultiplierDto(
+                    'Площадь квартиры',
+                    'current-maintenance',
+                    'кв.м'
+                )
             ),
-            new Service(
+            new ServiceDto(
                 $this->serviceKeys[1],
                 'Текущий ремонт',
                 (float)'3', // @todo need parse
                 "За метр квадратный",
-                [
-                    new FormInputMultiplier(
-                        'Площадь квартиры',
-                        'current-repairs',
-                        'кв.м'
-                    )
-                ]
+                new FormInputMultiplierDto(
+                    'Площадь квартиры',
+                    'current-repairs',
+                    'кв.м'
+                )
             ),
         ];
     }

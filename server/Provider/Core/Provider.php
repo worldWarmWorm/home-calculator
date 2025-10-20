@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HomeCalculator\Core;
+namespace HomeCalculator\Provider\Core;
 
 use DateInvalidTimeZoneException;
 use DateMalformedStringException;
@@ -10,16 +10,17 @@ use DateTimeImmutable;
 use DateTimeZone;
 use HomeCalculator\Delivery\LevelEnum;
 use HomeCalculator\Delivery\Telegram\Notification;
+use HomeCalculator\DTO\ServiceDto;
 use HomeCalculator\Logger\Log;
+use HomeCalculator\Storage\Core\StorageException;
 use HomeCalculator\Storage\RequestStorage;
-use HomeCalculator\Storage\StorageException;
 use HomeCalculator\Storage\TaxStorage;
 use Monolog\Level;
 
 abstract class Provider implements ProviderInterface
 {
     /**
-     * @var array<int, Service>
+     * @var array<int, ServiceDto>
      */
     protected array $services;
 
@@ -50,7 +51,7 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @return array<Service>
+     * @return array<ServiceDto>
      */
     public function getServices(): array
     {
@@ -62,15 +63,15 @@ abstract class Provider implements ProviderInterface
         return static::class . ':service:' . $uniqId;
     }
 
-    public function getServiceByKey(string $key): Service
+    public function getServiceByKey(string $key): ServiceDto
     {
         $service = array_values(array_filter(
             $this->services,
-            fn(Service $service) => $service->getKey() === $key
+            fn(ServiceDto $service) => $service->getKey() === $key
         ))[0] ?? null;
 
         if (null === $service) {
-            throw new ProviderException("Service with key $key not found");
+            throw new ProviderException("ServiceDto with key $key not found");
         }
 
         return $service;
@@ -125,12 +126,14 @@ abstract class Provider implements ProviderInterface
 
     public function getTaxStorage(): TaxStorage
     {
-        return $this->getStorage(TaxStorage::key());
+        static $storage;
+        return $storage ??= $this->getStorage(TaxStorage::key());
     }
 
     public function getRequestStorage(): RequestStorage
     {
-        return $this->getStorage(RequestStorage::key());
+        static $storage;
+        return $storage ??= $this->getStorage(RequestStorage::key());
     }
 
     /**
@@ -142,7 +145,7 @@ abstract class Provider implements ProviderInterface
         $tz = new DateTimeZone($timezone);
         $now = new DateTimeImmutable(timezone: $tz);
         $lastParseDate = $now->format('Y-m-d');
-        $filename = __DIR__ . '/../../last_parse_date.txt';
+        $filename = __DIR__ . '/../../../last_parse_date.txt';
 
         if (!file_exists($filename)) {
             file_put_contents($filename, $lastParseDate);

@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace HomeCalculator\Storage;
+namespace HomeCalculator\Storage\Core;
 
 abstract class Storage implements StorageInterface
 {
-    protected static ?StorageInterface $instance = null;
-
     protected function __construct(protected readonly string $storagePath)
     {
     }
 
     final public static function getInstance(): StorageInterface
     {
-        return static::$instance ??= new static(__DIR__ . '/../../db/' . static::key() . '.json');
+        static $instance;
+        return $instance ??= new static(__DIR__ . '/../../../db/' . static::key() . '.json');
     }
 
     final public function read(string $key, string $nestedKey): string|float|null

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Storage;
 
+use HomeCalculator\Storage\Core\Storage;
+
 /**
  * @method static TaxStorage getInstance()
  */

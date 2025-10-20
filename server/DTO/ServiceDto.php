@@ -2,21 +2,19 @@
 
 declare(strict_types=1);
 
-namespace HomeCalculator\Core;
+namespace HomeCalculator\DTO;
 
-use HomeCalculator\DTO\FormInputMultiplier;
-
-final readonly class Service
+final readonly class ServiceDto
 {
     /**
-     * @param list<FormInputMultiplier> $multipliers
+     * @param list<FormInputMultiplierDto>|FormInputMultiplierDto $multipliers
      */
     public function __construct(
         private string $key,
         private string $name,
         private ?float  $tax,
         private string $unit,
-        private array $multipliers
+        private array|FormInputMultiplierDto $multipliers
     ) {
     }
     public function getKey(): string
@@ -40,10 +38,10 @@ final readonly class Service
     }
 
     /**
-     * @return list<FormInputMultiplier>
+     * @return list<FormInputMultiplierDto>|FormInputMultiplierDto
      */
-    public function getMultipliers(): array
+    public function getMultipliers(): array|FormInputMultiplierDto
     {
-        return $this->multipliers;
+        return is_array($this->multipliers) ? $this->multipliers : [$this->multipliers];
     }
 }

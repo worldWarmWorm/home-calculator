@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Core\Provider;
-use HomeCalculator\Core\Service;
-use HomeCalculator\DTO\FormInputMultiplier;
+use HomeCalculator\DTO\FormInputMultiplierDto;
+use HomeCalculator\DTO\ServiceDto;
+use HomeCalculator\Provider\Core\Provider;
 
 final class GenerationOfSiberiaProvider extends Provider
 {
@@ -15,44 +15,38 @@ final class GenerationOfSiberiaProvider extends Provider
         parent::__construct($url, 'ООО "Генерация Сибири"', $isUnitTest);
 
         $this->services = [
-            new Service(
+            new ServiceDto(
                 $this->serviceKeys[0],
                 'Электрическая энергия',
                 $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[0]),
                 'кВт/ч',
-                [
-                    new FormInputMultiplier(
-                        'Электричество',
-                        'electricity',
-                        'кВт/ч'
-                    )
-                ]
+                new FormInputMultiplierDto(
+                    'Электричество',
+                    'electricity',
+                    'кВт/ч'
+                )
             ),
-            new Service(
+            new ServiceDto(
                 $this->serviceKeys[1],
                 'Тепловая энергия',
                 $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[1]),
                 'Гкал',
-                [
-                    new FormInputMultiplier(
-                        'Количество',
-                        'warm',
-                        'Гкал'
-                    )
-                ]
+                new FormInputMultiplierDto(
+                    'Количество',
+                    'warm',
+                    'Гкал'
+                )
             ),
-            new Service(
+            new ServiceDto(
                 $this->serviceKeys[2],
                 'Горячая вода',
                 $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[2]),
                 "За метр кубический",
-                [
-                    new FormInputMultiplier(
-                        'Объем',
-                        'hot-water',
-                        'м.куб'
-                    )
-                ]
+                new FormInputMultiplierDto(
+                    'Объем',
+                    'hot-water',
+                    'м.куб'
+                )
             )
         ];
     }

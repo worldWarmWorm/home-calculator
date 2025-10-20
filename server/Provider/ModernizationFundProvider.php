@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Core\Provider;
-use HomeCalculator\Core\Service;
-use HomeCalculator\DTO\FormInputMultiplier;
+use HomeCalculator\DTO\FormInputMultiplierDto;
+use HomeCalculator\DTO\ServiceDto;
+use HomeCalculator\Provider\Core\Provider;
 
 final class ModernizationFundProvider extends Provider
 {
@@ -15,18 +15,16 @@ final class ModernizationFundProvider extends Provider
         parent::__construct($url, 'Фонд модернизации ЖКХ', $isUnitTest);
 
         $this->services = [
-            new Service(
+            new ServiceDto(
                 $this->serviceKeys[0],
                 'Взнос за капитальный ремонт',
                 $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[0]),
                 'за 1 кв.м площади квартиры',
-                [
-                    new FormInputMultiplier(
-                        'Площадь квартиры',
-                        'square-of-house',
-                        'кв.м'
-                    )
-                ]
+                new FormInputMultiplierDto(
+                    'Площадь квартиры',
+                    'square-of-house',
+                    'кв.м'
+                )
             )
         ];
     }

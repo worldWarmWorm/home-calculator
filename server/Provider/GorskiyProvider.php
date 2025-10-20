@@ -8,11 +8,11 @@ use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\DTO\FormInputMultiplier;
 
-final class GorskyProvider extends Provider
+final class GorskiyProvider extends Provider
 {
-    public function __construct(string $url)
+    public function __construct(string $url, bool $isUnitTest = false)
     {
-        parent::__construct($url, 'ООО "КЖЭК Горский"');
+        parent::__construct($url, 'ООО "КЖЭК Горский"', $isUnitTest);
 
         $this->services = [
             new Service(

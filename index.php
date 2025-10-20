@@ -3,7 +3,7 @@
 use HomeCalculator\App;
 use HomeCalculator\Provider\AOSAHProvider;
 use HomeCalculator\Provider\GenerationOfSiberiaProvider;
-use HomeCalculator\Provider\GorskyProvider;
+use HomeCalculator\Provider\GorskiyProvider;
 use HomeCalculator\Provider\GorvodokanalProvider;
 use HomeCalculator\Provider\ModernizationFundProvider;
 
@@ -14,7 +14,7 @@ $app = App::init([
     new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
     new GenerationOfSiberiaProvider('https://gensib54.ru/'),
     new GorvodokanalProvider('https://www.gorvodokanal.com/abonents/tariffs/'),
-//    new GorskyProvider(''),
+//    new GorskiyProvider(''),
 ]);
 ?>
 

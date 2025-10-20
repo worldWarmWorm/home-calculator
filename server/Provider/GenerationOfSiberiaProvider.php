@@ -10,9 +10,9 @@ use HomeCalculator\DTO\FormInputMultiplier;
 
 final class GenerationOfSiberiaProvider extends Provider
 {
-    public function __construct(string $url)
+    public function __construct(string $url, bool $isUnitTest = false)
     {
-        parent::__construct($url, 'ООО "Генерация Сибири"');
+        parent::__construct($url, 'ООО "Генерация Сибири"', $isUnitTest);
 
         $this->services = [
             new Service(

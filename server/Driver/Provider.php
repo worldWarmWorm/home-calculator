@@ -29,8 +29,12 @@ abstract class Provider implements ProviderInterface
      * @param non-empty-string $url
      * @param non-empty-string $organizationName
      */
-    public function __construct(protected string $url, protected string $organizationName)
+    public function __construct(protected string $url, protected string $organizationName, bool $isUnitTest)
     {
+        if (true === $isUnitTest) {
+            Log::create(static::class . " constructor just called", Level::Debug);
+        }
+
         $this->actualizeServicesTaxes();
         $this->serviceKeys = array_keys(static::getKeySelectorPairs());
     }
@@ -60,10 +64,10 @@ abstract class Provider implements ProviderInterface
 
     public function getServiceByKey(string $key): Service
     {
-        $service = array_filter(
+        $service = array_values(array_filter(
             $this->services,
             fn(Service $service) => $service->getKey() === $key
-        )[0] ?? null;
+        ))[0] ?? null;
 
         if (null === $service) {
             throw new ProviderException("Service with key $key not found");

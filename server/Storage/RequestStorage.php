@@ -13,14 +13,4 @@ final class RequestStorage extends Storage
     {
         return 'request';
     }
-
-    public function read(string $key, string $nestedKey): string|float|null
-    {
-        // TODO: Implement read() method.
-    }
-
-    public function write(string $key, array $data): void
-    {
-        // TODO: Implement write() method.
-    }
 }

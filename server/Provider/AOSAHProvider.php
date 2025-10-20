@@ -10,9 +10,9 @@ use HomeCalculator\DTO\FormInputMultiplier;
 
 final class AOSAHProvider extends Provider
 {
-    public function __construct(string $url)
+    public function __construct(string $url, bool $isUnitTest = false)
     {
-        parent::__construct($url, 'АО "САХ"');
+        parent::__construct($url, 'АО "САХ"', $isUnitTest);
 
         $this->services = [
             new Service(

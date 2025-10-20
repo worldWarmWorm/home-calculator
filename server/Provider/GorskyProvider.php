@@ -7,17 +7,16 @@ namespace HomeCalculator\Provider;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Logger\Log;
-use HomeCalculator\Storage\Storage;
+use HomeCalculator\Storage\TaxStorage;
 use Monolog\Level;
 
 final class GorskyProvider extends Provider
 {
-
     public function __construct(string $url)
     {
         $this->organizationName = 'ООО "КЖЭК Горский"';
         $this->url = $url;
-        $this->storage = Storage::getInstance();
+        $this->storage = TaxStorage::getInstance();
         $this->actualizeServicesTaxes();
         $keys = array_keys($this->getKeySelectorPairs());
         $this->services = [

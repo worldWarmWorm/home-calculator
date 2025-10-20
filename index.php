@@ -10,11 +10,11 @@ use HomeCalculator\Provider\ModernizationFundProvider;
 require_once "vendor/autoload.php";
 
 $app = App::init([
-//    new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
-//    new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
-//    new GenerationOfSiberiaProvider('https://gensib54.ru/'),
-//    new GorvodokanalProvider('https://www.gorvodokanal.com/abonents/tariffs/'),
-//    new GorskyProvider(''),
+    new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/'),
+    new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
+    new GenerationOfSiberiaProvider('https://gensib54.ru/'),
+    new GorvodokanalProvider('https://www.gorvodokanal.com/abonents/tariffs/'),
+    new GorskyProvider(''),
 ]);
 ?>
 

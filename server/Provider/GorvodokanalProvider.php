@@ -8,7 +8,7 @@ use HomeCalculator\Driver\Multiplier;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Logger\Log;
-use HomeCalculator\Storage\Storage;
+use HomeCalculator\Storage\TaxStorage;
 use Monolog\Level;
 
 final class GorvodokanalProvider extends Provider
@@ -17,7 +17,7 @@ final class GorvodokanalProvider extends Provider
     {
         $this->organizationName = 'Горводоканал';
         $this->url = $url;
-        $this->storage = Storage::getInstance();
+        $this->storage = TaxStorage::getInstance();
         $this->actualizeServicesTaxes();
         $keys = array_keys($this->getKeySelectorPairs());
         $this->services = [

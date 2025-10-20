@@ -11,7 +11,7 @@ use DateTimeZone;
 use HomeCalculator\Delivery\LevelEnum;
 use HomeCalculator\Delivery\Telegram\Notification;
 use HomeCalculator\Logger\Log;
-use HomeCalculator\Storage\Storage;
+use HomeCalculator\Storage\TaxStorage;
 use Monolog\Level;
 
 abstract class Provider implements ProviderInterface
@@ -27,7 +27,7 @@ abstract class Provider implements ProviderInterface
      */
     protected array $services;
 
-    protected Storage $storage;
+    protected TaxStorage $storage;
 
     public function getUrl(): string
     {
@@ -40,7 +40,7 @@ abstract class Provider implements ProviderInterface
     }
 
     /**
-     * @return list<Service>
+     * @return array<Service>
      */
     public function getServices(): array
     {
@@ -94,7 +94,7 @@ abstract class Provider implements ProviderInterface
 
     protected function isTaxesExists(string $organizationName, array $serviceKeys): bool
     {
-        $storage = Storage::getInstance();
+        $storage = TaxStorage::getInstance();
 
         foreach ($serviceKeys as $serviceKey) {
             $tax = $storage->read($organizationName, $serviceKey);

@@ -8,7 +8,7 @@ use HomeCalculator\Driver\Multiplier;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
 use HomeCalculator\Logger\Log;
-use HomeCalculator\Storage\Storage;
+use HomeCalculator\Storage\TaxStorage;
 use Monolog\Level;
 
 final class GenerationOfSiberiaProvider extends Provider
@@ -17,7 +17,7 @@ final class GenerationOfSiberiaProvider extends Provider
     {
         $this->organizationName = 'ООО "Генерация Сибири"';
         $this->url = $url;
-        $this->storage = Storage::getInstance();
+        $this->storage = TaxStorage::getInstance();
         $this->actualizeServicesTaxes();
         $keys = array_keys($this->getKeySelectorPairs());
         $this->services = [

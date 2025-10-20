@@ -14,7 +14,7 @@ $app = App::init([
     new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/'),
     new GenerationOfSiberiaProvider('https://gensib54.ru/'),
     new GorvodokanalProvider('https://www.gorvodokanal.com/abonents/tariffs/'),
-    new GorskyProvider(''),
+//    new GorskyProvider(''),
 ]);
 ?>
 

@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Storage;
 
+/**
+ * @method static TaxStorage getInstance()
+ */
 final class TaxStorage extends Storage
 {
-    private const string PATH = __DIR__ . '/../../tax.db.json';
-
-    private static ?TaxStorage $instance = null;
-
-    private function __construct(private readonly string $storagePath)
+    public static function key(): string
     {
-    }
-
-    public static function getInstance(): self
-    {
-        return self::$instance ??= new self(self::PATH);
+        return 'tax';
     }
 
     public function read(string $key, string $nestedKey): string|float|null
@@ -45,16 +40,5 @@ final class TaxStorage extends Storage
         }
 
         file_put_contents($this->storagePath, json_encode($storage, JSON_PRETTY_PRINT));
-    }
-
-    private function asArray(): array
-    {
-        $storage = file_get_contents($this->storagePath);
-
-        if (false === $storage) {
-            return [];
-        }
-
-        return json_decode($storage, true);
     }
 }

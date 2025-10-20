@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Driver;
 
+use HomeCalculator\DTO\FormInputMultiplier;
+
 final readonly class Service
 {
     /**
-     * @param list<Multiplier> $multipliers
+     * @param list<FormInputMultiplier> $multipliers
      */
     public function __construct(
         private string $key,
@@ -38,7 +40,7 @@ final readonly class Service
     }
 
     /**
-     * @return list<Multiplier>
+     * @return list<FormInputMultiplier>
      */
     public function getMultipliers(): array
     {

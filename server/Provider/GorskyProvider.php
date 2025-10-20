@@ -6,43 +6,51 @@ namespace HomeCalculator\Provider;
 
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
-use HomeCalculator\Logger\Log;
-use HomeCalculator\Storage\TaxStorage;
-use Monolog\Level;
+use HomeCalculator\DTO\FormInputMultiplier;
 
 final class GorskyProvider extends Provider
 {
     public function __construct(string $url)
     {
-        $this->organizationName = 'ООО "КЖЭК Горский"';
-        $this->url = $url;
-        $this->storage = TaxStorage::getInstance();
-        $this->actualizeServicesTaxes();
-        $keys = array_keys($this->getKeySelectorPairs());
+        parent::__construct($url, 'ООО "КЖЭК Горский"');
+
         $this->services = [
             new Service(
-                $keys[0],
+                $this->serviceKeys[0],
                 'Текущее содержание',
                 (float)'32.23',
-                "За метр квадратный"
+                "За метр квадратный",
+                [
+                    new FormInputMultiplier(
+                        'Площадь квартиры',
+                        'current-maintenance',
+                        'кв.м'
+                    )
+                ]
             ),
             new Service(
-                $keys[1],
+                $this->serviceKeys[1],
                 'Текущий ремонт',
                 (float)'3',
-                "За метр квадратный"
-            )
+                "За метр квадратный",
+                [
+                    new FormInputMultiplier(
+                        'Площадь квартиры',
+                        'current-repairs',
+                        'кв.м'
+                    )
+                ]
+            ),
         ];
-        Log::create(self::class . ' constructor called', Level::Info);
     }
 
-    public function getKeySelectorPairs(): array
+    public static function getKeySelectorPairs(): array
     {
         $parent = 'body > main > div > div > div.div-flex > div.subpage > div > details:nth-child(2) > div > div > div.table-tariff__body > div:nth-child(1)';
 
         return [
-            $this->generateServiceKey('1') => "$parent > div:nth-child(2)",
-            $this->generateServiceKey('2') => "$parent > div:nth-child(3)",
+            self::generateServiceKey('1') => "$parent > div:nth-child(2)",
+            self::generateServiceKey('2') => "$parent > div:nth-child(3)",
         ];
     }
 }

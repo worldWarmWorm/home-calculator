@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Storage;
 
-use HomeCalculator\Storage\Storage;
-
-class RequestStorage extends Storage
+/**
+ * @method static RequestStorage getInstance()
+ */
+final class RequestStorage extends Storage
 {
+    public static function key(): string
+    {
+        return 'request';
+    }
 
     public function read(string $key, string $nestedKey): string|float|null
     {

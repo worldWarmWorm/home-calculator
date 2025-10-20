@@ -11,23 +11,29 @@ use DateTimeZone;
 use HomeCalculator\Delivery\LevelEnum;
 use HomeCalculator\Delivery\Telegram\Notification;
 use HomeCalculator\Logger\Log;
+use HomeCalculator\Storage\RequestStorage;
+use HomeCalculator\Storage\StorageException;
 use HomeCalculator\Storage\TaxStorage;
 use Monolog\Level;
 
 abstract class Provider implements ProviderInterface
 {
-    protected string $organizationName;
-
-    protected string $organizationEmail;
-
-    protected string $url;
-
     /**
      * @var array<int, Service>
      */
     protected array $services;
 
-    protected TaxStorage $storage;
+    protected array $serviceKeys;
+
+    /**
+     * @param non-empty-string $url
+     * @param non-empty-string $organizationName
+     */
+    public function __construct(protected string $url, protected string $organizationName)
+    {
+        $this->actualizeServicesTaxes();
+        $this->serviceKeys = array_keys(static::getKeySelectorPairs());
+    }
 
     public function getUrl(): string
     {
@@ -47,7 +53,7 @@ abstract class Provider implements ProviderInterface
         return $this->services;
     }
 
-    public function generateServiceKey(string $uniqId): string
+    public static function generateServiceKey(string $uniqId): string
     {
         return static::class . ':service:' . $uniqId;
     }
@@ -64,6 +70,63 @@ abstract class Provider implements ProviderInterface
         }
 
         return $service;
+    }
+
+    public function actualizeServicesTaxes(): void
+    {
+        if (
+            false === $this->isTaxesExists($this->organizationName, static::getKeySelectorPairs())
+            || true === $this->isTimeToUpdateServicesTaxes(TimezoneEnum::NOVOSIBIRSK->value)
+        ) {
+            foreach ($this->parseServicesTaxes() as $serviceKey => $tax) {
+                if (null === $tax) {
+                    $message = "Can't parse tax by serviceKey $serviceKey. Look provider's page: $this->url";
+                    Log::create($message, Level::Error);
+                    (new Notification($message, LevelEnum::CRITICAL->value))->send();
+
+                    continue;
+                }
+
+                $this->getTaxStorage()->write($this->organizationName, [$serviceKey => $tax]);
+            }
+        }
+    }
+
+    /**
+     * @return array<int, float>
+     */
+    public function parseServicesTaxes(): array
+    {
+        $parser = new Parser();
+        $serviceKeys = static::getKeySelectorPairs();
+        $taxes = [];
+
+        foreach ($serviceKeys as $serviceKey => $htmlSelector) {
+            $preventTax = $this->getTaxStorage()->read($this->organizationName, $serviceKey);
+            $taxes[$serviceKey] = $parser->parseTax($this->url, $htmlSelector);
+            $currentTax = $taxes[$serviceKey];
+            Log::create("Parsed tax $currentTax by key $serviceKey", Level::Info);
+
+            if (null === $preventTax || $preventTax === $currentTax) {
+                continue;
+            }
+
+            $message = "Tax of $serviceKey changed from $preventTax to $currentTax";
+            Log::create($message, Level::Notice);
+            (new Notification($message, LevelEnum::NOTICE->value))->send();
+        }
+
+        return $taxes;
+    }
+
+    public function getTaxStorage(): TaxStorage
+    {
+        return $this->getStorage(TaxStorage::key());
+    }
+
+    public function getRequestStorage(): RequestStorage
+    {
+        return $this->getStorage(RequestStorage::key());
     }
 
     /**
@@ -94,7 +157,7 @@ abstract class Provider implements ProviderInterface
 
     protected function isTaxesExists(string $organizationName, array $serviceKeys): bool
     {
-        $storage = TaxStorage::getInstance();
+        $storage = $this->getTaxStorage();
 
         foreach ($serviceKeys as $serviceKey) {
             $tax = $storage->read($organizationName, $serviceKey);
@@ -107,50 +170,18 @@ abstract class Provider implements ProviderInterface
         return true;
     }
 
-    public function actualizeServicesTaxes(): void
+    private function getStorage(string $key): TaxStorage | RequestStorage
     {
-        if (
-            false === $this->isTaxesExists($this->organizationName, $this->getKeySelectorPairs())
-            || true === $this->isTimeToUpdateServicesTaxes(TimezoneEnum::NOVOSIBIRSK->value)
-        ) {
-            foreach ($this->parseServicesTaxes() as $serviceKey => $tax) {
-                if (null === $tax) {
-                    $message = "Can't parse tax by serviceKey $serviceKey. Look provider's page: $this->url";
-                    Log::create($message, Level::Error);
-                    (new Notification($message, LevelEnum::CRITICAL->value))->send();
+        static $register;
+        $storages = $register ??= [
+            TaxStorage::key() => static fn(): TaxStorage => TaxStorage::getInstance(),
+            RequestStorage::key() => static fn(): RequestStorage => RequestStorage::getInstance(),
+        ];
 
-                    continue;
-                }
-
-                $this->storage->write($this->organizationName, [$serviceKey => $tax]);
-            }
-        }
-    }
-
-    /**
-     * @return array<int, float>
-     */
-    public function parseServicesTaxes(): array
-    {
-        $parser = new Parser();
-        $serviceKeys = $this->getKeySelectorPairs();
-        $taxes = [];
-
-        foreach ($serviceKeys as $serviceKey => $htmlSelector) {
-            $preventTax = $this->storage->read($this->organizationName, $serviceKey);
-            $taxes[$serviceKey] = $parser->parseTax($this->url, $htmlSelector);
-            $currentTax = $taxes[$serviceKey];
-            Log::create("Parsed tax $currentTax by key $serviceKey", Level::Info);
-
-            if (null === $preventTax || $preventTax === $currentTax) {
-                continue;
-            }
-
-            $message = "Tax of $serviceKey changed from $preventTax to $currentTax";
-            Log::create($message, Level::Notice);
-            (new Notification($message, LevelEnum::NOTICE->value))->send();
+        if (!isset($storages[$key])) {
+            throw new StorageException("Storage key \"$key\" not found");
         }
 
-        return $taxes;
+        return $storages[$key]();
     }
 }

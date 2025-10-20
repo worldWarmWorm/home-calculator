@@ -4,30 +4,24 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Driver\Multiplier;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
-use HomeCalculator\Logger\Log;
-use HomeCalculator\Storage\TaxStorage;
-use Monolog\Level;
+use HomeCalculator\DTO\FormInputMultiplier;
 
 final class AOSAHProvider extends Provider
 {
     public function __construct(string $url)
     {
-        $this->organizationName = 'АО "САХ"';
-        $this->url = $url;
-        $this->storage = TaxStorage::getInstance();
-        $this->actualizeServicesTaxes();
-        $keys = array_keys($this->getKeySelectorPairs());
+        parent::__construct($url, 'АО "САХ"');
+
         $this->services = [
             new Service(
-                $keys[0],
+                $this->serviceKeys[0],
                 'Обращение с ТКО',
-                $this->storage->read($this->organizationName, $keys[0]),
+                $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[0]),
                 'чел',
                 [
-                    new Multiplier(
+                    new FormInputMultiplier(
                         'Человек в квартире',
                         'humans-in-house',
                         'чел'
@@ -35,13 +29,12 @@ final class AOSAHProvider extends Provider
                 ]
             )
         ];
-        Log::create(self::class . ' constructor called', Level::Info);
     }
 
-    public function getKeySelectorPairs(): array
+    public static function getKeySelectorPairs(): array
     {
         return [
-            $this->generateServiceKey('1') => 'body > div.body > div.main > div:nth-child(2) > div.tariffs-page > div:nth-child(1) > ul > li:nth-child(6) > strong:nth-child(2)',
+            self::generateServiceKey('1') => 'body > div.body > div.main > div:nth-child(2) > div.tariffs-page > div:nth-child(1) > ul > li:nth-child(6) > strong:nth-child(2)',
         ];
     }
 }

@@ -7,5 +7,5 @@ interface ProviderInterface
     /**
      * @return array<string, string>
      */
-    public function getKeySelectorPairs(): array;
+    public static function getKeySelectorPairs(): array;
 }

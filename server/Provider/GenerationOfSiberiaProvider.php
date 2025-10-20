@@ -4,30 +4,24 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Driver\Multiplier;
 use HomeCalculator\Driver\Provider;
 use HomeCalculator\Driver\Service;
-use HomeCalculator\Logger\Log;
-use HomeCalculator\Storage\TaxStorage;
-use Monolog\Level;
+use HomeCalculator\DTO\FormInputMultiplier;
 
 final class GenerationOfSiberiaProvider extends Provider
 {
     public function __construct(string $url)
     {
-        $this->organizationName = 'ООО "Генерация Сибири"';
-        $this->url = $url;
-        $this->storage = TaxStorage::getInstance();
-        $this->actualizeServicesTaxes();
-        $keys = array_keys($this->getKeySelectorPairs());
+        parent::__construct($url, 'ООО "Генерация Сибири"');
+
         $this->services = [
             new Service(
-                $keys[0],
+                $this->serviceKeys[0],
                 'Электрическая энергия',
-                $this->storage->read($this->organizationName, $keys[0]),
+                $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[0]),
                 'кВт/ч',
                 [
-                    new Multiplier(
+                    new FormInputMultiplier(
                         'Электричество',
                         'electricity',
                         'кВт/ч'
@@ -35,12 +29,12 @@ final class GenerationOfSiberiaProvider extends Provider
                 ]
             ),
             new Service(
-                $keys[1],
+                $this->serviceKeys[1],
                 'Тепловая энергия',
-                $this->storage->read($this->organizationName, $keys[1]),
+                $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[1]),
                 'Гкал',
                 [
-                    new Multiplier(
+                    new FormInputMultiplier(
                         'Количество',
                         'warm',
                         'Гкал'
@@ -48,12 +42,12 @@ final class GenerationOfSiberiaProvider extends Provider
                 ]
             ),
             new Service(
-                $keys[2],
+                $this->serviceKeys[2],
                 'Горячая вода',
-                $this->storage->read($this->organizationName, $keys[2]),
+                $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[2]),
                 "За метр кубический",
                 [
-                    new Multiplier(
+                    new FormInputMultiplier(
                         'Объем',
                         'hot-water',
                         'м.куб'
@@ -61,17 +55,16 @@ final class GenerationOfSiberiaProvider extends Provider
                 ]
             )
         ];
-        Log::create(self::class . ' constructor called', Level::Info);
     }
 
-    public function getKeySelectorPairs(): array
+    public static function getKeySelectorPairs(): array
     {
         $parent = '#eael-advance-tabs-05e5405 > div.eael-tabs-content div:nth-child(2) > table > tbody';
 
         return [
-            $this->generateServiceKey('1') => "$parent > tr:nth-child(5) > td:nth-child(2)",
-            $this->generateServiceKey('2') => "$parent > tr:nth-child(13) > td:nth-child(2)",
-            $this->generateServiceKey('3') => "$parent > tr:nth-child(15) > td:nth-child(2)",
+            self::generateServiceKey('1') => "$parent > tr:nth-child(5) > td:nth-child(2)",
+            self::generateServiceKey('2') => "$parent > tr:nth-child(13) > td:nth-child(2)",
+            self::generateServiceKey('3') => "$parent > tr:nth-child(15) > td:nth-child(2)",
         ];
     }
 }

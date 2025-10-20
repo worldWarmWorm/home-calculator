@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HomeCalculator;
 
-use HomeCalculator\Driver\ProviderInterface;
+use HomeCalculator\Core\ProviderInterface;
 
 final class App
 {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HomeCalculator\Logger;
 
 use DateTimeZone;
-use HomeCalculator\Driver\TimezoneEnum;
+use HomeCalculator\Core\TimezoneEnum;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Monolog\Logger;

@@ -1,6 +1,6 @@
 <?php
 
-namespace HomeCalculator\Driver;
+namespace HomeCalculator\Core;
 
 interface ProviderInterface
 {

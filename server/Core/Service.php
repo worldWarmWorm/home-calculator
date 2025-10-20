@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HomeCalculator\Driver;
+namespace HomeCalculator\Core;
 
 use HomeCalculator\DTO\FormInputMultiplier;
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Driver\Provider;
-use HomeCalculator\Driver\Service;
+use HomeCalculator\Core\Provider;
+use HomeCalculator\Core\Service;
 use HomeCalculator\DTO\FormInputMultiplier;
 
 final class GorvodokanalProvider extends Provider

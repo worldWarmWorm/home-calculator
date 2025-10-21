@@ -11,7 +11,7 @@ class ModernizationFundProviderTest extends TestCase
 {
     public function testProviderData(): ModernizationFundProvider
     {
-        $provider = new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/');
+        $provider = new ModernizationFundProvider('https://www.fondgkh-nso.ru/oplata_vznosov/', true);
         self::assertEquals('Фонд модернизации ЖКХ', $provider->getOrganizationName());
         $service = $provider->getServiceByKey($provider->generateServiceKey('1'));
         self::assertEquals('Взнос за капитальный ремонт', $service->getName());

@@ -1,6 +1,6 @@
 <?php
 
-namespace HomeCalculator\Driver;
+namespace HomeCalculator\Provider\Core;
 
 enum TimezoneEnum: string
 {

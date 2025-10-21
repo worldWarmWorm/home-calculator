@@ -7,11 +7,11 @@ namespace HomeCalculator\Tests;
 use HomeCalculator\Provider\AOSAHProvider;
 use PHPUnit\Framework\TestCase;
 
-final class TestAOSAHProvider extends TestCase
+final class AOSAHProviderTest extends TestCase
 {
     public function testProviderData(): AOSAHProvider
     {
-        $provider = new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/');
+        $provider = new AOSAHProvider('https://xn--80aa5bmv.xn--p1ai/about/tariffs/', true);
         self::assertEquals('АО "САХ"', $provider->getOrganizationName());
         $service = $provider->getServiceByKey($provider->generateServiceKey('1'));
         self::assertEquals('Обращение с ТКО', $service->getName());

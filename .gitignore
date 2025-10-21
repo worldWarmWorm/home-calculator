@@ -2,6 +2,7 @@
 /.idea
 /vendor
 /node_modules
+/db
 
 #system
 composer.lock
@@ -10,7 +11,6 @@ app.log
 *.env
 
 #files
-db.json
 last_parse_date.txt
 package-lock.json
 

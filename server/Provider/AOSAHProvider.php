@@ -4,44 +4,35 @@ declare(strict_types=1);
 
 namespace HomeCalculator\Provider;
 
-use HomeCalculator\Driver\Multiplier;
-use HomeCalculator\Driver\Provider;
-use HomeCalculator\Driver\Service;
-use HomeCalculator\Logger\Log;
-use HomeCalculator\Storage\Storage;
-use Monolog\Level;
+use HomeCalculator\DTO\FormInputMultiplierDto;
+use HomeCalculator\DTO\ServiceDto;
+use HomeCalculator\Provider\Core\Provider;
 
 final class AOSAHProvider extends Provider
 {
-    public function __construct(string $url)
+    public function __construct(string $url, bool $isUnitTest = false)
     {
-        $this->organizationName = 'АО "САХ"';
-        $this->url = $url;
-        $this->storage = Storage::getInstance();
-        $this->actualizeServicesTaxes();
-        $keys = array_keys($this->getKeySelectorPairs());
+        parent::__construct($url, 'АО "САХ"', $isUnitTest);
+
         $this->services = [
-            new Service(
-                $keys[0],
+            new ServiceDto(
+                $this->serviceKeys[0],
                 'Обращение с ТКО',
-                $this->storage->read($this->organizationName, $keys[0]),
+                $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[0]),
                 'чел',
-                [
-                    new Multiplier(
-                        'Человек в квартире',
-                        'humans-in-house',
-                        'чел'
-                    )
-                ]
+                new FormInputMultiplierDto(
+                    'Человек в квартире',
+                    'humans-in-house',
+                    'чел'
+                )
             )
         ];
-        Log::create(self::class . ' constructor called', Level::Info);
     }
 
-    public function getKeySelectorPairs(): array
+    public static function getKeySelectorPairs(): array
     {
         return [
-            $this->generateServiceKey('1') => 'body > div.body > div.main > div:nth-child(2) > div.tariffs-page > div:nth-child(1) > ul > li:nth-child(6) > strong:nth-child(2)',
+            self::generateServiceKey('1') => 'body > div.body > div.main > div:nth-child(2) > div.tariffs-page > div:nth-child(1) > ul > li:nth-child(6) > strong:nth-child(2)',
         ];
     }
 }

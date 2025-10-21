@@ -8,35 +8,35 @@ use HomeCalculator\DTO\FormInputMultiplierDto;
 use HomeCalculator\DTO\ServiceDto;
 use HomeCalculator\Provider\Core\Provider;
 
-final class GorvodokanalProvider extends Provider
+final class GorskiyProvider extends Provider
 {
     public function __construct(string $url, bool $isUnitTest = false)
     {
-        parent::__construct($url, 'Горводоканал', $isUnitTest);
+        parent::__construct($url, 'ООО "КЖЭК Горский"', $isUnitTest);
 
         $this->services = [
             new ServiceDto(
                 $this->serviceKeys[0],
-                'Холодная вода',
-                $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[0]),
-                "За метр кубический",
+                'Текущее содержание',
+                (float)'32.23', // @todo need parse
+                "За метр квадратный",
                 new FormInputMultiplierDto(
-                    'Объем',
-                    'cold-water',
-                    'м.куб'
+                    'Площадь квартиры',
+                    'current-maintenance',
+                    'кв.м'
                 )
             ),
             new ServiceDto(
                 $this->serviceKeys[1],
-                'Водоотведение',
-                $this->getTaxStorage()->read($this->organizationName, $this->serviceKeys[1]),
-                "За метр кубический",
+                'Текущий ремонт',
+                (float)'3', // @todo need parse
+                "За метр квадратный",
                 new FormInputMultiplierDto(
-                    'Объем',
-                    'water-aside',
-                    'м.куб'
+                    'Площадь квартиры',
+                    'current-repairs',
+                    'кв.м'
                 )
-            )
+            ),
         ];
     }
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HomeCalculator\Driver;
+namespace HomeCalculator\DTO;
 
-final readonly class Multiplier
+final readonly class FormInputMultiplierDto
 {
     public function __construct(
         private string $label,
